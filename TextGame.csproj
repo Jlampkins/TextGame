@@ -1,0 +1,123 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <MonoGameContentReference Include="**\*.mgcb" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Content\Buildings\**" />
+    <EmbeddedResource Remove="Content\Buildings\**" />
+    <MonoGameContentReference Remove="Content\Buildings\**" />
+    <None Remove="Content\Buildings\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Buildings\Closed\closedDoorWay.png" />
+    <None Remove="Buildings\Closed\leftWallEdge.png" />
+    <None Remove="Buildings\Closed\rightWallEdge.png" />
+    <None Remove="Buildings\Closed\smallRoof.png" />
+    <None Remove="Buildings\Closed\wall.png" />
+    <None Remove="Content\animatedDoor.png" />
+    <None Remove="Content\backOpening.png" />
+    <None Remove="Content\backOpeningBig.png" />
+    <None Remove="Content\bowie.png" />
+    <None Remove="Content\bowieBig.png" />
+    <None Remove="Content\brownBrickFloor.png" />
+    <None Remove="Content\doorJamb.png" />
+    <None Remove="Content\forwardOpening.png" />
+    <None Remove="Content\kiwiBig.png" />
+    <None Remove="Content\leftLowerCornerOpening.png" />
+    <None Remove="Content\leftUpperCornerOpening.png" />
+    <None Remove="Content\middleOpening.png" />
+    <None Remove="Content\openDoorWay.png" />
+    <None Remove="Content\rightLowerCornerOpening.png" />
+    <None Remove="Content\rightUpperCornerOpening.png" />
+    <None Remove="Content\smallBrownBrickFloor.png" />
+    <None Remove="Content\tanWall.png" />
+    <None Remove="Content\textBox.png" />
+    <None Remove="Content\WeaponNPC.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Content\animatedDoor.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\backOpeningBig.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\closedDoorWay.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\forwardOpening.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\kiwiBig.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\leftLowerCornerOpening.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\leftUpperCornerOpening.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\leftWallEdge.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\middleOpening.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\rightLowerCornerOpening.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\rightUpperCornerOpening.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\rightWallEdge.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\smallBrownBrickFloor.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\smallRoof.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\tanWall.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\textBox.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\wall.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\bowie.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\bowieBig.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\brownBrickFloor.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\doorJamb.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\openDoorWay.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\WeaponNPC.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MonoGame.Content.Builder" Version="3.7.0.9" />
+    <PackageReference Include="MonoGame.Framework.DesktopGL.Core" Version="3.7.0.7" />
+  </ItemGroup>
+
+</Project>
