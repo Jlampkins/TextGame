@@ -95,7 +95,7 @@ namespace TextGame
 
         public void PlayAnimation(string name)
         {
-            if(currentAnimation != name && currentDirection == MyDirection.none)
+            if (currentAnimation != name && currentDirection == MyDirection.none)
             {
                 currentAnimation = name;
                 frameIndex = 0;
