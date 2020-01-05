@@ -7,14 +7,14 @@ using System.Text;
 
 namespace TextGame
 {
-    class Kiwi : MovingSprite
+    class Kiwi : AnimatingSprite
     { 
         public override Rectangle BoundingBox
         {
             get
             {
-                //width and height should be for each individual frame. 43 and 45
-                return new Rectangle((int)Position.X, (int)Position.Y, 35, 40);
+                //width and height should be for each individual frame. 35 and 40
+                return new Rectangle((int)Position.X, (int)Position.Y, 38, 48);
             }
         }
 

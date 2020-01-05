@@ -9,7 +9,7 @@ namespace TextGame
 {
     public interface ISprite
     {
-        public void Update(GameTime gameTime, List<Sprite> sprites);
+        public void Update(GameTime gameTime, List<Sprite> sprites, List<AnimatingSprite> talkingSprites);
         public void Draw(SpriteBatch spriteBatch);
         public void LoadContent(ContentManager content);
     }

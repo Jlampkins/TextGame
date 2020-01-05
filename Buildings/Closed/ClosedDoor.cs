@@ -27,24 +27,24 @@ namespace TextGame.Buildings.Closed
         {
             Texture = content.Load<Texture2D>("closedDoorWay");
         }
-        public override void Update(GameTime gameTime, List<Sprite> sprites)
-        {
-            foreach (var sprite in sprites)
-            {
-                if (this.IsTouchingTop(sprite) && sprite is Player)
-                {
-                    //doorOpen = true;
-                    break;
-                }
-                //this.PlayAnimation("Open");
-            }
+        //public override void Update(GameTime gameTime, List<Sprite> sprites)
+        //{
+        //    foreach (var sprite in sprites)
+        //    {
+        //        if (this.IsTouchingTop(sprite) && sprite is Player)
+        //        {
+        //            //doorOpen = true;
+        //            break;
+        //        }
+        //        //this.PlayAnimation("Open");
+        //    }
 
-            //sDirection = Vector2.Zero;
-            //float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            //sPosition += (sDirection * deltaTime);
+        //    //sDirection = Vector2.Zero;
+        //    //float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+        //    //sPosition += (sDirection * deltaTime);
 
-            //base.Update(gameTime, sprites);
-        }
+        //    //base.Update(gameTime, sprites);
+        //}
 
 
         public override void Draw(SpriteBatch spriteBatch)

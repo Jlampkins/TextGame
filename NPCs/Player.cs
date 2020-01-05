@@ -11,17 +11,20 @@ namespace TextGame
 {
     class Player : AnimatingSprite
     {
+        float mySpeed = 3;
+        bool attacking = false;
         public override Rectangle BoundingBox
         {
             get
             {
                 //width and height should be for each individual frame. 43 and 45
-                return new Rectangle((int)Position.X, (int)Position.Y, 46, 45);
+                return new Rectangle((int)Position.X, (int)Position.Y, 38, 48);
             }
         }
-        //public int DrawOrder { get; set; }
-        float mySpeed = 3;
-        bool attacking = false;
+        public override void LoadContent(ContentManager content)
+        {
+            Texture = content.Load<Texture2D>("bowieBig");
+        }
         public Player(Vector2 position) : base(position)
         {
             FramesPerSecond = 5;
@@ -35,7 +38,6 @@ namespace TextGame
             AddAnimation(1, 0, 7, "IdleDown", 48, 48, new Vector2(0, 0));
             PlayAnimation("IdleDown");
         }
-
         private void HandleInput(KeyboardState keyState)
         {
             if (!attacking && !IsTalking)
@@ -71,11 +73,10 @@ namespace TextGame
                     PlayAnimation("Right");
                     CurrentDirection = MyDirection.right;
                 }
-
             }
             //used for attacking animation
-            if (keyState.IsKeyDown(Keys.Space) && !IsTalking)
-            {
+            //if (keyState.IsKeyDown(Keys.Space) && IsTalking)
+            //{
                 //isTalking = false;
                 //if(this.BoundingBox.)
                 //if (currentAnimation.Contains("Down"))
@@ -102,40 +103,41 @@ namespace TextGame
                 //    attacking = true;
                 //    currentDirection = MyDirection.right;
                 //}
-            }
-            else if (!attacking)
-            {
-                if (CurrentAnimation.Contains("Left"))
-                {
-                    PlayAnimation("IdleLeft");
-                }
-                if (CurrentAnimation.Contains("Right"))
-                {
-                    PlayAnimation("IdleRight");
-                }
-                if (CurrentAnimation.Contains("Up"))
-                {
-                    PlayAnimation("IdleUp");
-                }
-                if (CurrentAnimation.Contains("Down"))
-                {
-                    PlayAnimation("IdleDown");
-                }
-            }
+            //}
+            //else if (!attacking)
+            //{
+            //    if (CurrentAnimation.Contains("Left"))
+            //    {
+            //        PlayAnimation("IdleLeft");
+            //    }
+            //    if (CurrentAnimation.Contains("Right"))
+            //    {
+            //        PlayAnimation("IdleRight");
+            //    }
+            //    if (CurrentAnimation.Contains("Up"))
+            //    {
+            //        PlayAnimation("IdleUp");
+            //    }
+            //    if (CurrentAnimation.Contains("Down"))
+            //    {
+            //        PlayAnimation("IdleDown");
+            //    }
+            //}
             CurrentDirection = MyDirection.none;
         }
-        public override void Update(GameTime gameTime, List<Sprite> sprites)
+        public override void Update(GameTime gameTime, List<Sprite> sprites, List<AnimatingSprite> talkingSprites)
         {
             Direction *= mySpeed;
             Position += Direction;
             Direction = Vector2.Zero;
             PlayerCollision(sprites);
+            Speak(talkingSprites);
             HandleInput(Keyboard.GetState());
 
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             Position += (Direction * deltaTime);
 
-            base.Update(gameTime, sprites);
+            base.Update(gameTime, sprites, talkingSprites);
         }   
         public void PlayerCollision(List<Sprite>sprites)
         {
@@ -153,11 +155,75 @@ namespace TextGame
             }
         }
 
-
-        public override void LoadContent(ContentManager content)
+        public void Speak(List<AnimatingSprite> sprites)
         {
-            Texture = content.Load<Texture2D>("bowieBig");
+            foreach (var sprite in sprites)
+            {
+                if (sprite == this)
+                    continue;
+                if ((Keyboard.HasBeenPressed(Keys.Space)) &&
+                    (IsTouchingTop(sprite) || IsTouchingBottom(sprite) ||
+                    IsTouchingLeft(sprite) || IsTouchingRight(sprite)))
+                {
+                    FaceToTalk(sprite);
+                }
+
+            }
         }
+        public void FaceToTalk(AnimatingSprite sprite)
+        {
+            if (IsTouchingTop(sprite))
+            {
+                sprite.PlayAnimation("Up");
+                sprite.CurrentDirection = MyDirection.up;
+                //stopMove = true;
+            }
+            else if (IsTouchingBottom(sprite))
+            {
+                sprite.PlayAnimation("Down");
+                sprite.CurrentDirection = MyDirection.down;
+                //stopMove = true;
+            }
+            else if (IsTouchingLeft(sprite))
+            {
+                sprite.PlayAnimation("Left");
+                sprite.CurrentDirection = MyDirection.left;
+                //stopMove = true;
+            }
+            else if (IsTouchingRight(sprite))
+            {
+                sprite.PlayAnimation("Right");
+                sprite.CurrentDirection = MyDirection.right;
+                //stopMove = true;
+            }
+        }
+
+
+
+
+        //public void Speak(List<Sprite> sprites)
+        //{
+        //    foreach (var sprite in sprites)
+        //    {
+        //        //talking to character -- have it's own interface?
+        //        if ((Keyboard.HasBeenPressed(Keys.Space) && !sprite.IsTalking) &&
+        //            (IsTouchingTop(sprite) || IsTouchingBottom(sprite) ||
+        //            IsTouchingLeft(sprite) || IsTouchingRight(sprite)))
+        //        {
+        //            IsTalking = true;
+        //            sprite.IsTalking = true;
+        //            sprite.Direction = new Vector2(0, Direction.Y);
+        //            sprite.Direction = new Vector2(Direction.X, 0);
+        //            messages.Add(new DisplayMessage("Hello, Mammal!", TimeSpan.FromSeconds(2.0), new Vector2(200, 550), Color.White));
+        //            FaceToTalk(sprite);
+        //        }
+        //        if (messages.Count <= 0)
+        //        {
+        //            sprite.IsTalking = false;
+        //            IsTalking = false;
+        //        }
+        //    }
+        //}
 
         //public override void AnimationDone(string animation)
         //{

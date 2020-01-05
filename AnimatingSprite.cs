@@ -5,10 +5,11 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using static TextGame.TypeText;
 
 namespace TextGame
 {
-    public abstract class AnimatingSprite : Sprite, ISprite, IAnimate
+    public abstract class AnimatingSprite : TalkingSprite, ISprite, IAnimate
     {
         public double FramesPerSecond
         {
@@ -21,19 +22,18 @@ namespace TextGame
         public Dictionary<string, Rectangle[]> Animations = new Dictionary<string, Rectangle[]>();
         public enum MyDirection { none, left, right, up, down };
         public MyDirection CurrentDirection { get; set; }
-        public bool IsTalking = false;
-
         public AnimatingSprite(Vector2 position) : base (position)
         {
             Position = position;
         }
-
-        public override void Update(GameTime gameTime, List<Sprite> sprites)
+        public override void Update(GameTime gameTime, List<Sprite> sprites, List<AnimatingSprite>talkingSprites)
         {
             UpdateAnimation(gameTime);
             CheckCollision(sprites);
-            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            Position += (Direction * deltaTime);
+            Speak(talkingSprites);
+            //float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            //Position += (Direction * deltaTime);
+            base.Update(gameTime, sprites, talkingSprites);
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
@@ -55,36 +55,6 @@ namespace TextGame
             {
                 CurrentAnimation = name;
                 FrameIndex = 0;
-            }
-        }
-        public void FaceToTalk(List<AnimatingSprite> sprites)
-        {
-            foreach (var barrier in sprites)
-            {
-                if ((barrier is Player && Keyboard.HasBeenPressed(Keys.Space) && barrier.IsTouchingTop(this)))
-                {
-                    PlayAnimation("Up");
-                    CurrentDirection = MyDirection.up;
-                    //stopMove = true;
-                }
-                else if ((barrier is Player && Keyboard.HasBeenPressed(Keys.Space) && barrier.IsTouchingBottom(this)))
-                {
-                    PlayAnimation("Down");
-                    CurrentDirection = MyDirection.down;
-                    //stopMove = true;
-                }
-                else if ((barrier is Player && Keyboard.HasBeenPressed(Keys.Space) && barrier.IsTouchingLeft(this)))
-                {
-                    PlayAnimation("Left");
-                    CurrentDirection = MyDirection.left;
-                    //stopMove = true;
-                }
-                else if ((barrier is Player && Keyboard.HasBeenPressed(Keys.Space) && barrier.IsTouchingRight(this)))
-                {
-                    PlayAnimation("Right");
-                    CurrentDirection = MyDirection.right;
-                    //stopMove = true;
-                }
             }
         }
         public void UpdateAnimation(GameTime gameTime)
@@ -121,7 +91,53 @@ namespace TextGame
                    (Direction.Y < 0 && IsTouchingBottom(barrier)))
                     Direction = new Vector2(Direction.X, 0);
             }
-            #endregion
+
         }
+        #endregion
+
+        #region Speak Animation
+        public void Speak(List<AnimatingSprite> sprites)
+        {
+            foreach (var sprite in sprites)
+            {
+                if (sprite == this)
+                    continue;
+                if ((sprite is Player && Keyboard.HasBeenPressed(Keys.Space)) &&
+                    (sprite.IsTouchingTop(this) || sprite.IsTouchingBottom(this) ||
+                    sprite.IsTouchingLeft(this) || sprite.IsTouchingRight(this)))
+                {
+                    FaceToTalk(sprite);
+                }
+
+            }
+        }
+        public void FaceToTalk(AnimatingSprite sprite)
+        {
+            if (sprite.IsTouchingTop(this))
+            {
+                PlayAnimation("Up");
+                CurrentDirection = MyDirection.up;
+                //stopMove = true;
+            }
+            else if (sprite.IsTouchingBottom(this))
+            {
+                PlayAnimation("Down");
+                CurrentDirection = MyDirection.down;
+                //stopMove = true;
+            }
+            else if (sprite.IsTouchingLeft(this))
+            {
+                PlayAnimation("Left");
+                CurrentDirection = MyDirection.left;
+                //stopMove = true;
+            }
+            else if (sprite.IsTouchingRight(this))
+            {
+                PlayAnimation("Right");
+                CurrentDirection = MyDirection.right;
+                //stopMove = true;
+            }
+        }
+        #endregion
     }
 }

@@ -30,48 +30,48 @@ namespace TextGame
             Texture = content.Load<Texture2D>("doorJamb");
             //sTexture2 = content.Load<Texture2D>("smallRoof");
         }
-        public override void Update(GameTime gameTime, List<Sprite> sprites)
-        {
+        //public override void Update(GameTime gameTime, List<Sprite> sprites)
+        //{
 
 
-            //add roof back when player is half in OpenDoorJam
+        //    //add roof back when player is half in OpenDoorJam
 
-            //    if (sprite == this)
-            //        continue;
-            //    if ((this.sDirection.X > 0 && this.IsTouchingLeft(sprite) && !(sprite is OpenDoorJamb)) ||
-            //        (this.sDirection.X < 0 && this.IsTouchingRight(sprite)) && !(sprite is OpenDoorJamb))
-            //        this.sDirection.X = 0;
-
-
-            //    //if ((this.sDirection.Y < 0 && this.IsTouchingBottom(sprite) && sprite is ClosedDoor))
-            //    //    sprite.PlayAnimation("Open");
-
-            //    if ((this.sDirection.Y > 0 && this.IsTouchingTop(sprite) && !(sprite is OpenDoorJamb)) ||
-            //       (this.sDirection.Y < 0 && this.IsTouchingBottom(sprite)) && !(sprite is OpenDoorJamb))
-            //        this.sDirection.Y = 0;
-            //}
-
-            foreach (var sprite in sprites)
-            {
-                if (this.IsTouchingTop(sprite) && sprite is Player)
-                {
-                    //this.BoundingBox = Rectangle.Empty;
-                    //sTexture2 = null;
-                    //doorOpen = true;
-                }
-                //this.PlayAnimation("Open");
-            }
+        //    //    if (sprite == this)
+        //    //        continue;
+        //    //    if ((this.sDirection.X > 0 && this.IsTouchingLeft(sprite) && !(sprite is OpenDoorJamb)) ||
+        //    //        (this.sDirection.X < 0 && this.IsTouchingRight(sprite)) && !(sprite is OpenDoorJamb))
+        //    //        this.sDirection.X = 0;
 
 
+        //    //    //if ((this.sDirection.Y < 0 && this.IsTouchingBottom(sprite) && sprite is ClosedDoor))
+        //    //    //    sprite.PlayAnimation("Open");
+
+        //    //    if ((this.sDirection.Y > 0 && this.IsTouchingTop(sprite) && !(sprite is OpenDoorJamb)) ||
+        //    //       (this.sDirection.Y < 0 && this.IsTouchingBottom(sprite)) && !(sprite is OpenDoorJamb))
+        //    //        this.sDirection.Y = 0;
+        //    //}
+
+        //    foreach (var sprite in sprites)
+        //    {
+        //        if (this.IsTouchingTop(sprite) && sprite is Player)
+        //        {
+        //            //this.BoundingBox = Rectangle.Empty;
+        //            //sTexture2 = null;
+        //            //doorOpen = true;
+        //        }
+        //        //this.PlayAnimation("Open");
+        //    }
 
 
 
-            Direction = Vector2.Zero;
-            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            Position += (Direction * deltaTime);
 
-            //base.Update(gameTime, sprites);
-        }
+
+        //    Direction = Vector2.Zero;
+        //    float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+        //    Position += (Direction * deltaTime);
+
+        //    //base.Update(gameTime, sprites);
+        //}
         public override void Draw(SpriteBatch spriteBatch)
         {
             

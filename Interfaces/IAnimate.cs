@@ -9,7 +9,7 @@ namespace TextGame
     {
         public void AddAnimation(int frames, int yPos, int xStartFrame, string name, int width, int height, Vector2 offset);
         public void PlayAnimation(string name);
-        public void FaceToTalk(List<AnimatingSprite> sprites);
+        //public void FaceToTalk(Sprite sprite);
         public void CheckCollision(List<Sprite> sprites);
     }
 }

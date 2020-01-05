@@ -72,7 +72,7 @@ namespace TextGame
         public virtual void Update(GameTime gameTime, List<AnimatedSprite> sprites)
         {
 
-                timeElapsed += gameTime.ElapsedGameTime.TotalSeconds;
+            timeElapsed += gameTime.ElapsedGameTime.TotalSeconds;
             if (timeElapsed > timeToUpdate)
             {
                 timeElapsed -= timeToUpdate;

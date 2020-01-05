@@ -11,9 +11,6 @@ namespace TextGame
         //Should stop the player from moving when active
         //Should activate when space bar is pressed and player and sprite are colliding.
         //Should disappear when space bar is pressed
-        public string SayWords(string words)
-        {
-            return words;
-        }
+        public string SayWords(string words);
     }
 }

@@ -10,17 +10,18 @@ namespace TextGame
         public bool StopMove { get; set; }
         public Rectangle Boundary { get; set; }
         double TotalElapsedSeconds = 0;
-        const double MovementChangeTimeSeconds = 1.0;
+        const double MovementChangeTimeSeconds = 10.0;
         public MovingSprite(Vector2 position) : base(position)
         {
             Position = position;
         }
-        public override void Update(GameTime gameTime, List<Sprite> sprites)
+        public override void Update(GameTime gameTime, List<Sprite> sprites, List<AnimatingSprite> talkingSprites)
         {
             GetMoveDirection();
             RandomMove(gameTime);
+            //Speak(sprites);
             Position += Direction;
-            base.Update(gameTime, sprites);
+            base.Update(gameTime, sprites, talkingSprites);
         }
         #region Randomly Move
         public Vector2 GetRandomDirection()

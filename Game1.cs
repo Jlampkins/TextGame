@@ -15,6 +15,7 @@ namespace TextGame
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         private List<Sprite> sprites;
+        private List<AnimatingSprite> talkingSprites;
         private Song townMusic;
         private bool drawSprite = false;
         Player player;
@@ -48,7 +49,7 @@ namespace TextGame
         ForwardOpening forwardOpening2;
         ForwardOpening forwardOpening3;
 
-        TextBox textBox;
+        //TextBox textBox;
         private SpriteFont font;
         Kiwi kiwi;
         SirAstral npc;
@@ -75,13 +76,13 @@ namespace TextGame
             spriteBatch = new SpriteBatch(GraphicsDevice);
             font = Content.Load<SpriteFont>("Text");
             townMusic = Content.Load<Song>("LivelyTown");
-            MediaPlayer.Play(townMusic);
-            MediaPlayer.IsRepeating = true;
+            //MediaPlayer.Play(townMusic);
+            //MediaPlayer.IsRepeating = true;
 
             player = new Player(new Vector2(100, 100));
             npc = new SirAstral(new Vector2(200, 200));
             //weaponOwner = new MoverSprite(new Vector2(150, 150));
-            kiwi = new Kiwi(new Vector2(175, 175));
+            kiwi = new Kiwi(new Vector2(300, 300));
             //textBox = new TextBox(new Vector2(400, 400));
 
             //closedDoor = new ClosedDoor(new Vector2(370, 320));
@@ -161,6 +162,7 @@ namespace TextGame
             //middleOpening6.LoadContent(Content);
 
             sprites = new List<Sprite>();
+            talkingSprites = new List<AnimatingSprite>();
 
             //sprites.Add(npc);
 
@@ -206,6 +208,9 @@ namespace TextGame
             //sprites.Add(textBox);
             //sprites.Add(weaponOwner);
             sprites.Add(kiwi);
+            talkingSprites.Add(player);
+            talkingSprites.Add(npc);
+            talkingSprites.Add(kiwi);
 
 
             // TODO: use this.Content to load your game content here
@@ -234,8 +239,8 @@ namespace TextGame
 
             foreach (var sprite in sprites)
             {
-                sprite.Update(gameTime, sprites);
-                base.Update(gameTime);
+                sprite.Update(gameTime, sprites, talkingSprites);
+                //base.Update(gameTime);
             }
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();

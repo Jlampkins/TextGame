@@ -9,8 +9,9 @@ using System.Text;
 namespace TextGame
 {
     public abstract class Sprite : ISprite
-    { 
-        public virtual Rectangle BoundingBox { get; }
+    {
+        public bool IsTalking = false;
+        public virtual Rectangle BoundingBox { get; set; }
         public Texture2D Texture { get; set; }
         public Vector2 Position { get; set; }
         public Vector2 Direction { get; set; }
@@ -20,7 +21,7 @@ namespace TextGame
             Position = position;
         }
         public abstract void LoadContent(ContentManager content);
-        public virtual void Update(GameTime gameTime, List<Sprite> sprites)
+        public virtual void Update(GameTime gameTime, List<Sprite> sprites, List<AnimatingSprite> talkingSprites)
         {
         }
         public virtual void Draw(SpriteBatch spriteBatch)
