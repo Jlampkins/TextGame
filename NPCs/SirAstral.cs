@@ -7,30 +7,23 @@ using System.Text;
 
 namespace TextGame
 {
-    class NPC : AnimatedSprite
+    class SirAstral : AnimatingSprite
     {
         public override Rectangle BoundingBox
         {
             get
             {
                 //width and height should be for each individual frame. 43 and 45
-                return new Rectangle((int)sPosition.X, (int)sPosition.Y, 38, 40);
+                return new Rectangle((int)Position.X, (int)Position.Y, 38, 48);
             }
         }
-        //float mySpeed = 100;
-
-        public override void Update(GameTime gameTime, List<AnimatedSprite> sprites)
+        public override void LoadContent(ContentManager content)
         {
-            //sDirection = Vector2.Zero;
-            //HandleInput(Keyboard.GetState());
-            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            //sDirection *= mySpeed;
-            sPosition += (sDirection * deltaTime);
-
-            base.Update(gameTime, sprites);
+            Texture = content.Load<Texture2D>("sirAstralBig");
         }
-        public NPC(Vector2 position) : base(position)
+        public SirAstral(Vector2 position) : base(position)
         {
+            //336 42
             FramesPerSecond = 2;
             AddAnimation(2, 0, 0, "Up", 41, 48, new Vector2(0, 0));
             AddAnimation(1, 0, 0, "IdleUp", 48, 48, new Vector2(0, 0));
@@ -42,15 +35,6 @@ namespace TextGame
             AddAnimation(1, 0, 3, "IdleRight", 48, 48, new Vector2(0, 0));
             PlayAnimation("Down");
         }
-
-        public void LoadContent(ContentManager content)
-        {
-            sTexture = content.Load<Texture2D>("sirAstralBig");
-            //AddAnimation(8);
-        }
-
-        public override void AnimationDone(string animation)
-        {
-        }
     }
 }
+
