@@ -6,7 +6,7 @@ using System.Text;
 
 namespace TextGame
 {
-    public static class IHelpMoveSprite
+    public static class IHelpMove
     {
         //double TotalElapsedSeconds = 0;
         //double MovementChangeTimeSeconds = 1.0; //seconds
@@ -61,7 +61,7 @@ namespace TextGame
                 }
             }
         }
-        public static void Move(this IMove sprite, GameTime gameTime) 
+        public static void RandomMove(this IMove sprite, GameTime gameTime) 
         {
             double TotalElapsedSeconds = 0;
             double MovementChangeTimeSeconds = 1.0;
@@ -88,7 +88,20 @@ namespace TextGame
             }
         }
 
+        public static void CheckCollision(this IMove sprite, List<ISprite> sprites)
+        {
+            foreach (var barrier in sprites)
+            {
+                if (barrier == sprite)
+                    continue;
+                if ((sprite.Direction.X > 0 && sprite.IsTouchingLeft(barrier)) ||
+                    (sprite.Direction.X < 0 && sprite.IsTouchingRight(barrier)))
+                    sprite.Direction = new Vector2(0, sprite.Direction.Y);
 
-
+                if ((sprite.Direction.Y > 0 && sprite.IsTouchingTop(barrier)) ||
+                   (sprite.Direction.Y < 0 && sprite.IsTouchingBottom(barrier)))
+                    sprite.Direction = new Vector2(sprite.Direction.X, 0);
+            }
+        }
     }
 }

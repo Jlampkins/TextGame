@@ -8,14 +8,8 @@ using System.Text;
 
 namespace TextGame
 {
-    public abstract class Sprite : ISprite, IAnimate, IMove
-    { 
-        //All Sprites
-        public virtual Rectangle BoundingBox { get; }
-        public Texture2D Texture { get; set; }
-        public Vector2 Position { get; set; }
-
-        //Animated Sprites
+    abstract class AnimatingSprite : ISprite, IAnimate
+    {
         public double FramesPerSecond
         {
             set { TimeToUpdate = (1f / value); }
@@ -28,11 +22,6 @@ namespace TextGame
         public enum MyDirection { none, left, right, up, down };
         public MyDirection CurrentDirection { get; set; }
         public bool IsNotTalking { get; set; }
-
-        //Moving Sprites
-        public bool StopMove { get; set; }
-        public Rectangle Boundary { get; set; }
-        public Vector2 Direction { get; set; }
 
         public abstract void LoadContent(ContentManager content);
         public virtual void Update(IMove sprite, GameTime gameTime, List<ISprite> sprites)
@@ -60,7 +49,6 @@ namespace TextGame
             //text.DrawMessages();
             spriteBatch.Draw(Texture, Position, Animations[CurrentAnimation][FrameIndex], Color.White);
         }
-
         #region Collision
         public bool IsTouchingLeft(Sprite sprite)
         {
@@ -117,7 +105,7 @@ namespace TextGame
             }
         }
 
-        public void FaceToTalk(Sprite sprite, List<Sprite> sprites)
+        public void FaceToTalk(AnimatingSprite sprite, List<AnimatingSprite> sprites)
         {
             foreach (var barrier in sprites)
             {
@@ -149,71 +137,5 @@ namespace TextGame
         }
 
         public abstract void AnimationDone(string animation);
-
-
-
-        #endregion
-
-        #region Move
-        public void CheckBoundary(Sprite sprite)
-        {
-            if (sprite.IsTouchingBottomBoundary(sprite.Boundary) || sprite.IsTouchingTopBoundary(sprite.Boundary))
-            {
-                sprite.Direction = new Vector2(0, sprite.Direction.Y);
-            }
-            if (sprite.IsTouchingLeftBoundary(sprite.Boundary) || sprite.IsTouchingRightBoundary(sprite.Boundary))
-            {
-                sprite.Direction = new Vector2(sprite.Direction.X, 0);
-            }
-        }
-        public void CheckCollision(Sprite sprite, List<Sprite> sprites)
-        {
-            foreach (var barrier in sprites)
-            {
-                if (barrier == sprite)
-                    continue;
-                if ((sprite.Direction.X > 0 && sprite.IsTouchingLeft(barrier)) ||
-                    (sprite.Direction.X < 0 && sprite.IsTouchingRight(barrier)))
-                    sprite.Direction = new Vector2(0, sprite.Direction.Y);
-
-                if ((sprite.Direction.Y > 0 && sprite.IsTouchingTop(barrier)) ||
-                   (sprite.Direction.Y < 0 && sprite.IsTouchingBottom(barrier)))
-                    sprite.Direction = new Vector2(sprite.Direction.X, 0);
-            }
-        }
-        public bool IsTouchingLeftBoundary(Rectangle boundary)
-        {
-            //return true if this otherwise false
-            return this.BoundingBox.Right + this.Direction.X > boundary.Left &&
-                this.BoundingBox.Left < boundary.Left &&
-                this.BoundingBox.Bottom > boundary.Top &&
-                this.BoundingBox.Top < boundary.Bottom;
-        }
-        public bool IsTouchingRightBoundary(Rectangle boundary)
-        {
-            return this.BoundingBox.Left + this.Direction.X < boundary.Right &&
-                this.BoundingBox.Right > boundary.Right &&
-                this.BoundingBox.Bottom > boundary.Top &&
-                this.BoundingBox.Top < boundary.Bottom;
-        }
-        public bool IsTouchingTopBoundary(Rectangle boundary)
-        {
-            return this.BoundingBox.Bottom + this.Direction.Y > boundary.Top &&
-                this.BoundingBox.Top < boundary.Top &&
-                this.BoundingBox.Right > boundary.Left &&
-                this.BoundingBox.Left < boundary.Right;
-        }
-        public bool IsTouchingBottomBoundary(Rectangle boundary)
-        {
-            return this.BoundingBox.Top + this.Direction.Y < boundary.Bottom &&
-                this.BoundingBox.Bottom > boundary.Bottom &&
-                this.BoundingBox.Right > boundary.Left &&
-                this.BoundingBox.Left < boundary.Right;
-        }
-        #endregion
-
     }
-
-
-
 }

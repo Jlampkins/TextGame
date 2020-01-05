@@ -9,18 +9,18 @@ namespace TextGame
 {
     public interface ISprite
     {
-        public Rectangle BoundingBox { get; }
-        public Texture2D Texture { get; set; }
-        public Vector2 Position {get; set; }
-        public void Update(GameTime gameTime, List<ISprite> sprites);
+        //public Rectangle BoundingBox { get; }
+        //public Texture2D Texture { get; set; }
+        //public Vector2 Position { get; set; }
+        public void Update(IMove sprite, GameTime gameTime, List<ISprite> sprites);
         public void Draw(SpriteBatch spriteBatch);
         public void LoadContent(ContentManager content);
 
         //animated sprite?
-        public bool IsTouchingTop(ISprite sprite);
-        public bool IsTouchingBottom(ISprite sprite);
-        public bool IsTouchingLeft(ISprite sprite);
-        public bool IsTouchingRight(ISprite sprite);
+        public bool IsTouchingTop(Sprite sprite);
+        public bool IsTouchingBottom(Sprite sprite);
+        public bool IsTouchingLeft(Sprite sprite);
+        public bool IsTouchingRight(Sprite sprite);
 
 
 

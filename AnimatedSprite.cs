@@ -104,36 +104,36 @@ namespace TextGame
 
         public abstract void AnimationDone(string animation);
 
-        #region Collision
-        public bool IsTouchingLeft(AnimatedSprite sprite)
-        {
-            //return true if this otherwise false
-            return this.BoundingBox.Right + this.sDirection.X > sprite.BoundingBox.Left &&
-                this.BoundingBox.Left < sprite.BoundingBox.Left &&
-                this.BoundingBox.Bottom > sprite.BoundingBox.Top &&
-                this.BoundingBox.Top < sprite.BoundingBox.Bottom;
-        }
-        public bool IsTouchingRight(AnimatedSprite sprite)
-        {
-            return this.BoundingBox.Left + this.sDirection.X < sprite.BoundingBox.Right &&
-                this.BoundingBox.Right > sprite.BoundingBox.Right &&
-                this.BoundingBox.Bottom > sprite.BoundingBox.Top &&
-                this.BoundingBox.Top < sprite.BoundingBox.Bottom;
-        }
-        public bool IsTouchingTop(AnimatedSprite sprite)
-        {
-            return this.BoundingBox.Bottom + this.sDirection.Y > sprite.BoundingBox.Top &&
-                this.BoundingBox.Top < sprite.BoundingBox.Top &&
-                this.BoundingBox.Right > sprite.BoundingBox.Left &&
-                this.BoundingBox.Left < sprite.BoundingBox.Right;
-        }
-        public bool IsTouchingBottom(AnimatedSprite sprite)
-        {
-            return this.BoundingBox.Top + this.sDirection.Y < sprite.BoundingBox.Bottom &&
-                this.BoundingBox.Bottom > sprite.BoundingBox.Bottom &&
-                this.BoundingBox.Right > sprite.BoundingBox.Left &&
-                this.BoundingBox.Left < sprite.BoundingBox.Right;
-        }
-        #endregion
+        //#region Collision
+        //public bool IsTouchingLeft(Sprite sprite)
+        //{
+        //    //return true if this otherwise false
+        //    return this.BoundingBox.Right + this.sDirection.X > sprite.BoundingBox.Left &&
+        //        this.BoundingBox.Left < sprite.BoundingBox.Left &&
+        //        this.BoundingBox.Bottom > sprite.BoundingBox.Top &&
+        //        this.BoundingBox.Top < sprite.BoundingBox.Bottom;
+        //}
+        //public bool IsTouchingRight(Sprite sprite)
+        //{
+        //    return this.BoundingBox.Left + this.sDirection.X < sprite.BoundingBox.Right &&
+        //        this.BoundingBox.Right > sprite.BoundingBox.Right &&
+        //        this.BoundingBox.Bottom > sprite.BoundingBox.Top &&
+        //        this.BoundingBox.Top < sprite.BoundingBox.Bottom;
+        //}
+        //public bool IsTouchingTop(Sprite sprite)
+        //{
+        //    return this.BoundingBox.Bottom + this.sDirection.Y > sprite.BoundingBox.Top &&
+        //        this.BoundingBox.Top < sprite.BoundingBox.Top &&
+        //        this.BoundingBox.Right > sprite.BoundingBox.Left &&
+        //        this.BoundingBox.Left < sprite.BoundingBox.Right;
+        //}
+        //public bool IsTouchingBottom(Sprite sprite)
+        //{
+        //    return this.BoundingBox.Top + this.sDirection.Y < sprite.BoundingBox.Bottom &&
+        //        this.BoundingBox.Bottom > sprite.BoundingBox.Bottom &&
+        //        this.BoundingBox.Right > sprite.BoundingBox.Left &&
+        //        this.BoundingBox.Left < sprite.BoundingBox.Right;
+        //}
+        //#endregion
     }
 }
