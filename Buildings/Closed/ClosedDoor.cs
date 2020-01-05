@@ -8,7 +8,7 @@ using System.Text;
 
 namespace TextGame.Buildings.Closed
 {
-    class ClosedDoor : AnimatedSprite
+    class ClosedDoor : Sprite
     {
 
         public override Rectangle BoundingBox
@@ -21,19 +21,19 @@ namespace TextGame.Buildings.Closed
         }
         public ClosedDoor(Vector2 position) : base(position)
         {
-            sPosition = position;
+            Position = position;
         }
-        public void LoadContent(ContentManager content)
+        public override void LoadContent(ContentManager content)
         {
-            sTexture2 = content.Load<Texture2D>("closedDoorWay");
+            Texture = content.Load<Texture2D>("closedDoorWay");
         }
-        public override void Update(GameTime gameTime, List<AnimatedSprite> sprites)
+        public override void Update(GameTime gameTime, List<Sprite> sprites)
         {
             foreach (var sprite in sprites)
             {
                 if (this.IsTouchingTop(sprite) && sprite is Player)
                 {
-                    doorOpen = true;
+                    //doorOpen = true;
                     break;
                 }
                 //this.PlayAnimation("Open");
@@ -49,18 +49,18 @@ namespace TextGame.Buildings.Closed
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            if (sTexture2 != null)
+            if (Texture != null)
             {
                 //draws the image in a rectangle
-                spriteBatch.Draw(sTexture2,
+                spriteBatch.Draw(Texture,
                         new Rectangle(370, 363, 80, 77),
                         new Rectangle(0, 0, 47, 44),
                         Color.White);
             }
         }
 
-        public override void AnimationDone(string animation)
-        {
-        }
+        //public override void AnimationDone(string animation)
+        //{
+        //}
     }
 }

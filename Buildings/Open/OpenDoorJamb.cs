@@ -8,7 +8,7 @@ using TextGame.Buildings.Closed;
 
 namespace TextGame
 {
-    class OpenDoorJamb : AnimatedSprite
+    class OpenDoorJamb : Sprite
     {
 
         public override Rectangle BoundingBox
@@ -22,15 +22,15 @@ namespace TextGame
 
         public OpenDoorJamb(Vector2 position) : base(position)
         {
-            sPosition = position;
+            Position = position;
         }
 
-        public void LoadContent(ContentManager content)
+        public override void LoadContent(ContentManager content)
         {
-            sTexture = content.Load<Texture2D>("doorJamb");
+            Texture = content.Load<Texture2D>("doorJamb");
             //sTexture2 = content.Load<Texture2D>("smallRoof");
         }
-        public override void Update(GameTime gameTime, List<AnimatedSprite> sprites)
+        public override void Update(GameTime gameTime, List<Sprite> sprites)
         {
 
 
@@ -57,7 +57,7 @@ namespace TextGame
                 {
                     //this.BoundingBox = Rectangle.Empty;
                     //sTexture2 = null;
-                    doorOpen = true;
+                    //doorOpen = true;
                 }
                 //this.PlayAnimation("Open");
             }
@@ -66,9 +66,9 @@ namespace TextGame
 
 
 
-            sDirection = Vector2.Zero;
+            Direction = Vector2.Zero;
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            sPosition += (sDirection * deltaTime);
+            Position += (Direction * deltaTime);
 
             //base.Update(gameTime, sprites);
         }
@@ -76,7 +76,7 @@ namespace TextGame
         {
             
 
-            spriteBatch.Draw(sTexture,
+            spriteBatch.Draw(Texture,
                new Rectangle(370, 328, 80, 50),
                new Rectangle(0, 0, 46, 29),
                Color.White);
@@ -88,8 +88,8 @@ namespace TextGame
             //       Color.White);
         }
 
-        public override void AnimationDone(string animation)
-        {
-        }
+        //public override void AnimationDone(string animation)
+        //{
+        //}
     }
 }

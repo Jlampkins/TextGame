@@ -7,12 +7,13 @@ namespace TextGame
 {
     public interface IMove 
     { 
-        //public bool StopMove { get; set; }
-        //public Rectangle Boundary { get; set; }
-        //public Vector2 Direction { get; set; }
         public bool IsTouchingTopBoundary(Rectangle boundary);
         public bool IsTouchingBottomBoundary(Rectangle boundary);
         public bool IsTouchingLeftBoundary(Rectangle boundary);
         public bool IsTouchingRightBoundary(Rectangle boundary);
+        public void CheckBoundary();
+        public void RandomMove(GameTime gameTime);
+        public void GetMoveDirection();
+        public Vector2 GetRandomDirection();
     }
 }

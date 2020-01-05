@@ -8,67 +8,33 @@ using System.Text;
 
 namespace TextGame
 {
-    public abstract class Sprite : ISprite, IAnimate, IMove
+    public abstract class Sprite : ISprite
     { 
-        //All Sprites
         public virtual Rectangle BoundingBox { get; }
         public Texture2D Texture { get; set; }
         public Vector2 Position { get; set; }
-
-        //Animated Sprites
-        public double FramesPerSecond
-        {
-            set { TimeToUpdate = (1f / value); }
-        }
-        public int FrameIndex { get; set; }
-        public double TimeElapsed { get; set; }
-        public double TimeToUpdate { get; set; }
-        public string CurrentAnimation { get; set; }
-        public Dictionary<string, Rectangle[]> Animations = new Dictionary<string, Rectangle[]>();
-        public enum MyDirection { none, left, right, up, down };
-        public MyDirection CurrentDirection { get; set; }
-        public bool IsNotTalking { get; set; }
-
-        //Moving Sprites
-        public bool StopMove { get; set; }
-        public Rectangle Boundary { get; set; }
         public Vector2 Direction { get; set; }
 
-        public abstract void LoadContent(ContentManager content);
-        public virtual void Update(IMove sprite, GameTime gameTime, List<ISprite> sprites)
+        public Sprite(Vector2 position)
         {
-
-            IHelpMove.CheckCollision(sprite, sprites);
-
-            TimeElapsed += gameTime.ElapsedGameTime.TotalSeconds;
-            if (TimeElapsed > TimeToUpdate)
-            {
-                TimeElapsed -= TimeToUpdate;
-                if (FrameIndex < Animations[CurrentAnimation].Length - 1)
-                {
-                    FrameIndex++;
-                }
-                else
-                {
-                    //AnimationDone(CurrentAnimation);
-                    FrameIndex = 0;
-                }
-            }
+            Position = position;
+        }
+        public abstract void LoadContent(ContentManager content);
+        public virtual void Update(GameTime gameTime, List<Sprite> sprites)
+        {
         }
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-            //text.DrawMessages();
-            spriteBatch.Draw(Texture, Position, Animations[CurrentAnimation][FrameIndex], Color.White);
+            spriteBatch.Draw(Texture, Position, Color.White);
         }
-
         #region Collision
         public bool IsTouchingLeft(Sprite sprite)
         {
             //return true if this otherwise false
-            return this.BoundingBox.Right + this.Direction.X > sprite.BoundingBox.Left &&
-                this.BoundingBox.Left < sprite.BoundingBox.Left &&
-                this.BoundingBox.Bottom > sprite.BoundingBox.Top &&
-                this.BoundingBox.Top < sprite.BoundingBox.Bottom;
+            return BoundingBox.Right + Direction.X > sprite.BoundingBox.Left &&
+                BoundingBox.Left < sprite.BoundingBox.Left &&
+                BoundingBox.Bottom > sprite.BoundingBox.Top &&
+                BoundingBox.Top < sprite.BoundingBox.Bottom;
         }
         public bool IsTouchingRight(Sprite sprite)
         {
@@ -92,128 +58,6 @@ namespace TextGame
                 this.BoundingBox.Left < sprite.BoundingBox.Right;
         }
         #endregion
-
-        #region Animation
-        public void AddAnimation(int frames, int yPos, int xStartFrame, string name, int width, int height, Vector2 offset)
-        {
-            Dictionary<string, Rectangle[]> sAnimations = new Dictionary<string, Rectangle[]>();
-            //int width = sTexture.Width / frames;
-            //creates arry of rectangles
-            Rectangle[] Rectangles = new Rectangle[frames];
-
-            for (int i = 0; i < frames; i++)
-            {
-                Rectangles[i] = new Rectangle((i + xStartFrame) * width, yPos, width, height);
-            }
-            sAnimations.Add(name, Rectangles);
-        }
-
-        public void PlayAnimation(string name)
-        {
-            if (CurrentAnimation != name && CurrentDirection == MyDirection.none)
-            {
-                CurrentAnimation = name;
-                FrameIndex = 0;
-            }
-        }
-
-        public void FaceToTalk(Sprite sprite, List<Sprite> sprites)
-        {
-            foreach (var barrier in sprites)
-            {
-                if ((barrier is Player && Keyboard.HasBeenPressed(Keys.Space) && barrier.IsTouchingTop(sprite)))
-                {
-                    sprite.PlayAnimation("Up");
-                    sprite.CurrentDirection = MyDirection.up;
-                    //stopMove = true;
-                }
-                else if ((barrier is Player && Keyboard.HasBeenPressed(Keys.Space) && barrier.IsTouchingBottom(sprite)))
-                {
-                    sprite.PlayAnimation("Down");
-                    sprite.CurrentDirection = MyDirection.down;
-                    //stopMove = true;
-                }
-                else if ((barrier is Player && Keyboard.HasBeenPressed(Keys.Space) && barrier.IsTouchingLeft(sprite)))
-                {
-                    sprite.PlayAnimation("Left");
-                    sprite.CurrentDirection = MyDirection.left;
-                    //stopMove = true;
-                }
-                else if ((barrier is Player && Keyboard.HasBeenPressed(Keys.Space) && barrier.IsTouchingRight(sprite)))
-                {
-                    sprite.PlayAnimation("Right");
-                    sprite.CurrentDirection = MyDirection.right;
-                    //stopMove = true;
-                }
-            }
-        }
-
-        public abstract void AnimationDone(string animation);
-
-
-
-        #endregion
-
-        #region Move
-        public void CheckBoundary(Sprite sprite)
-        {
-            if (sprite.IsTouchingBottomBoundary(sprite.Boundary) || sprite.IsTouchingTopBoundary(sprite.Boundary))
-            {
-                sprite.Direction = new Vector2(0, sprite.Direction.Y);
-            }
-            if (sprite.IsTouchingLeftBoundary(sprite.Boundary) || sprite.IsTouchingRightBoundary(sprite.Boundary))
-            {
-                sprite.Direction = new Vector2(sprite.Direction.X, 0);
-            }
-        }
-        public void CheckCollision(Sprite sprite, List<Sprite> sprites)
-        {
-            foreach (var barrier in sprites)
-            {
-                if (barrier == sprite)
-                    continue;
-                if ((sprite.Direction.X > 0 && sprite.IsTouchingLeft(barrier)) ||
-                    (sprite.Direction.X < 0 && sprite.IsTouchingRight(barrier)))
-                    sprite.Direction = new Vector2(0, sprite.Direction.Y);
-
-                if ((sprite.Direction.Y > 0 && sprite.IsTouchingTop(barrier)) ||
-                   (sprite.Direction.Y < 0 && sprite.IsTouchingBottom(barrier)))
-                    sprite.Direction = new Vector2(sprite.Direction.X, 0);
-            }
-        }
-        public bool IsTouchingLeftBoundary(Rectangle boundary)
-        {
-            //return true if this otherwise false
-            return this.BoundingBox.Right + this.Direction.X > boundary.Left &&
-                this.BoundingBox.Left < boundary.Left &&
-                this.BoundingBox.Bottom > boundary.Top &&
-                this.BoundingBox.Top < boundary.Bottom;
-        }
-        public bool IsTouchingRightBoundary(Rectangle boundary)
-        {
-            return this.BoundingBox.Left + this.Direction.X < boundary.Right &&
-                this.BoundingBox.Right > boundary.Right &&
-                this.BoundingBox.Bottom > boundary.Top &&
-                this.BoundingBox.Top < boundary.Bottom;
-        }
-        public bool IsTouchingTopBoundary(Rectangle boundary)
-        {
-            return this.BoundingBox.Bottom + this.Direction.Y > boundary.Top &&
-                this.BoundingBox.Top < boundary.Top &&
-                this.BoundingBox.Right > boundary.Left &&
-                this.BoundingBox.Left < boundary.Right;
-        }
-        public bool IsTouchingBottomBoundary(Rectangle boundary)
-        {
-            return this.BoundingBox.Top + this.Direction.Y < boundary.Bottom &&
-                this.BoundingBox.Bottom > boundary.Bottom &&
-                this.BoundingBox.Right > boundary.Left &&
-                this.BoundingBox.Left < boundary.Right;
-        }
-        #endregion
-
+ 
     }
-
-
-
 }

@@ -5,38 +5,91 @@ using System.Text;
 
 namespace TextGame
 {
-    abstract class MovingSprite : ISprite, IAnimate, IMove
+    abstract class MovingSprite : AnimatingSprite, ISprite, IAnimate, IMove
     {
         public bool StopMove { get; set; }
         public Rectangle Boundary { get; set; }
-        public Vector2 Direction { get; set; }
-
-        public void CheckBoundary(Sprite sprite)
+        double TotalElapsedSeconds = 0;
+        const double MovementChangeTimeSeconds = 1.0;
+        public MovingSprite(Vector2 position) : base(position)
         {
-            if (sprite.IsTouchingBottomBoundary(sprite.Boundary) || sprite.IsTouchingTopBoundary(sprite.Boundary))
+            Position = position;
+        }
+        public override void Update(GameTime gameTime, List<Sprite> sprites)
+        {
+            GetMoveDirection();
+            RandomMove(gameTime);
+            Position += Direction;
+            base.Update(gameTime, sprites);
+        }
+        #region Randomly Move
+        public Vector2 GetRandomDirection()
+        {
+            Random random = new Random();
+            int randomDirection = random.Next(8);
+
+            switch (randomDirection)
             {
-                sprite.Direction = new Vector2(0, sprite.Direction.Y);
-            }
-            if (sprite.IsTouchingLeftBoundary(sprite.Boundary) || sprite.IsTouchingRightBoundary(sprite.Boundary))
-            {
-                sprite.Direction = new Vector2(sprite.Direction.X, 0);
+                case 1:
+                    //left
+                    return new Vector2(-1, 0);
+                case 2:
+                    //right
+                    return new Vector2(1, 0);
+                case 3:
+                    //up
+                    return new Vector2(0, -1);
+                case 4:
+                    //down
+                    return new Vector2(0, 1);
+                //plus perhaps additional directions?
+                default:
+                    //still
+                    return Vector2.Zero;
             }
         }
-        public void CheckCollision(Sprite sprite, List<Sprite> sprites)
+        public void GetMoveDirection()
         {
-            foreach (var barrier in sprites)
+            if (Direction.Y < 0)
             {
-                if (barrier == sprite)
-                    continue;
-                if ((sprite.Direction.X > 0 && sprite.IsTouchingLeft(barrier)) ||
-                    (sprite.Direction.X < 0 && sprite.IsTouchingRight(barrier)))
-                    sprite.Direction = new Vector2(0, sprite.Direction.Y);
-
-                if ((sprite.Direction.Y > 0 && sprite.IsTouchingTop(barrier)) ||
-                   (sprite.Direction.Y < 0 && sprite.IsTouchingBottom(barrier)))
-                    sprite.Direction = new Vector2(sprite.Direction.X, 0);
+                PlayAnimation("Up");
+                CurrentDirection = MyDirection.up;
+            }
+            else if (Direction.Y > 0)
+            {
+                PlayAnimation("Down");
+                CurrentDirection = MyDirection.down;
+            }
+            else
+            {
+                if (Direction.X < 0)
+                {
+                    PlayAnimation("Left");
+                    CurrentDirection = MyDirection.left;
+                }
+                else if (Direction.X > 0)
+                {
+                    PlayAnimation("Right");
+                    CurrentDirection = MyDirection.right;
+                }
             }
         }
+        public void RandomMove(GameTime gameTime)
+        {
+            //if (IsNotTalking)
+            //{
+                CurrentDirection = MyDirection.none;
+                TotalElapsedSeconds += gameTime.ElapsedGameTime.TotalSeconds;
+                if (TotalElapsedSeconds >= MovementChangeTimeSeconds)
+                {
+                    TotalElapsedSeconds -= MovementChangeTimeSeconds;
+                    Direction = GetRandomDirection();
+                }
+            //}
+        }
+        #endregion
+
+        #region Collision of MovingSprite Boundary
         public bool IsTouchingLeftBoundary(Rectangle boundary)
         {
             //return true if this otherwise false
@@ -66,5 +119,18 @@ namespace TextGame
                 this.BoundingBox.Right > boundary.Left &&
                 this.BoundingBox.Left < boundary.Right;
         }
+        public void CheckBoundary()
+        {
+            if (IsTouchingBottomBoundary(Boundary) || IsTouchingTopBoundary(Boundary))
+            {
+                Direction = new Vector2(0, Direction.Y);
+            }
+            if (IsTouchingLeftBoundary(Boundary) || IsTouchingRightBoundary(Boundary))
+            {
+                Direction = new Vector2(Direction.X, 0);
+            }
+        }
+        #endregion
+
     }
 }

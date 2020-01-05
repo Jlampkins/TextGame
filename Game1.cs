@@ -18,8 +18,8 @@ namespace TextGame
         private Song townMusic;
         private bool drawSprite = false;
         Player player;
-        NPC npc;
-        MoverSprite weaponOwner;
+        //NPC npc;
+        //MoverSprite weaponOwner;
         OpenLeftLowerCornerWall leftLowerWall;
         OpenRightLowerCornerWall rightLowerWall;
         OpenLeftUpperCornerWall leftUpperWall;
@@ -51,6 +51,7 @@ namespace TextGame
         TextBox textBox;
         private SpriteFont font;
         Kiwi kiwi;
+        SirAstral npc;
 
 
         public Game1()
@@ -78,8 +79,8 @@ namespace TextGame
             MediaPlayer.IsRepeating = true;
 
             player = new Player(new Vector2(100, 100));
-            npc = new NPC(new Vector2(200, 200));
-            weaponOwner = new MoverSprite(new Vector2(150, 150));
+            npc = new SirAstral(new Vector2(200, 200));
+            //weaponOwner = new MoverSprite(new Vector2(150, 150));
             kiwi = new Kiwi(new Vector2(175, 175));
             //textBox = new TextBox(new Vector2(400, 400));
 
@@ -160,15 +161,15 @@ namespace TextGame
             //middleOpening6.LoadContent(Content);
 
             sprites = new List<Sprite>();
-            
+
             //sprites.Add(npc);
-            
+
             //sprites.Add(brownBrickFloor);
             //sprites.Add(rightWall);
             //sprites.Add(leftWall);
             //sprites.Add(openDoor);
             //sprites.Add(closedDoor);
-            
+
 
 
 
@@ -177,7 +178,7 @@ namespace TextGame
             //sprites.Add(leftUpperWall);
             //sprites.Add(rightLowerWall);
             //sprites.Add(rightUpperWall);
-            
+
 
             //sprites.Add(backOpening);
             //sprites.Add(backOpening2);
@@ -198,7 +199,8 @@ namespace TextGame
             //sprites.Add(rightWall2);
             //sprites.Add(tanWall);
 
-            //sprites.Add(player);
+            sprites.Add(player);
+            sprites.Add(npc);
             //sprites.Add(doorJamb);
             //sprites.Add(smallRoof);
             //sprites.Add(textBox);
@@ -211,23 +213,23 @@ namespace TextGame
 
         protected override void Update(GameTime gameTime)
         {
-            if (weaponOwner.isTalking)
-            {
-                sprites.Insert(0, textBox);
-            }
-            if (!weaponOwner.isTalking)
-            {
-                sprites.Remove(textBox);
-            }
-            if (closedDoor.doorOpen || doorJamb.doorOpen)
-            {
-                sprites.Remove(closedDoor);
-                sprites.Remove(smallRoof);   
-            }
-            if (openDoor.drawRoof)
-            {
-                sprites.Add(smallRoof);
-            }
+            //if (weaponOwner.isTalking)
+            //{
+            //    sprites.Insert(0, textBox);
+            //}
+            //if (!weaponOwner.isTalking)
+            //{
+            //    sprites.Remove(textBox);
+            //}
+            //if (closedDoor.doorOpen || doorJamb.doorOpen)
+            //{
+            //    sprites.Remove(closedDoor);
+            //    sprites.Remove(smallRoof);   
+            //}
+            //if (openDoor.drawRoof)
+            //{
+            //    sprites.Add(smallRoof);
+            //}
             //show text box when speaking
 
             foreach (var sprite in sprites)
