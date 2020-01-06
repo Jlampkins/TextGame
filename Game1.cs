@@ -253,7 +253,7 @@ namespace TextGame
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();
-            foreach (var sprite in sprites)
+            foreach (var sprite in talkingSprites)
             {
                 sprite.Draw(spriteBatch);
             }

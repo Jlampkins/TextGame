@@ -130,8 +130,8 @@ namespace TextGame
             Direction *= mySpeed;
             Position += Direction;
             Direction = Vector2.Zero;
-            PlayerCollision(sprites);
-            Speak(talkingSprites);
+            //PlayerCollision(sprites);
+            //Speak(talkingSprites);
             HandleInput(Keyboard.GetState());
 
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -150,53 +150,53 @@ namespace TextGame
                     Direction = new Vector2(0, Direction.Y);
 
                 if ((this.Direction.Y > 0 && this.IsTouchingTop(sprite) && !(sprite is OpenDoorJamb) && !(sprite is OpenDoorWay) && !(sprite is ClosedDoor)) ||
-                   (this.Direction.Y < 0 && this.IsTouchingBottom(sprite)) && !(sprite is OpenDoorJamb) && !(sprite is OpenDoorWay) && !(sprite is ClosedDoor))
+                   (this.Direction.Y < 0 && this.IsTouchingRight(sprite)) && !(sprite is OpenDoorJamb) && !(sprite is OpenDoorWay) && !(sprite is ClosedDoor))
                         Direction = new Vector2(Direction.X, 0);
             }
         }
 
-        public void Speak(List<AnimatingSprite> sprites)
-        {
-            foreach (var sprite in sprites)
-            {
-                if (sprite == this)
-                    continue;
-                if ((Keyboard.HasBeenPressed(Keys.Space)) &&
-                    (IsTouchingTop(sprite) || IsTouchingBottom(sprite) ||
-                    IsTouchingLeft(sprite) || IsTouchingRight(sprite)))
-                {
-                    FaceToTalk(sprite);
-                }
+        //public void Speak(List<AnimatingSprite> sprites)
+        //{
+        //    foreach (var sprite in sprites)
+        //    {
+        //        if (sprite == this)
+        //            continue;
+        //        if ((Keyboard.HasBeenPressed(Keys.Space)) &&
+        //            (IsTouchingTop(sprite) || IsTouchingBottom(sprite) ||
+        //            IsTouchingLeft(sprite) || IsTouchingRight(sprite)))
+        //        {
+        //            FaceToTalk(sprite);
+        //        }
 
-            }
-        }
-        public void FaceToTalk(AnimatingSprite sprite)
-        {
-            if (IsTouchingTop(sprite))
-            {
-                sprite.PlayAnimation("Up");
-                sprite.CurrentDirection = MyDirection.up;
-                //stopMove = true;
-            }
-            else if (IsTouchingBottom(sprite))
-            {
-                sprite.PlayAnimation("Down");
-                sprite.CurrentDirection = MyDirection.down;
-                //stopMove = true;
-            }
-            else if (IsTouchingLeft(sprite))
-            {
-                sprite.PlayAnimation("Left");
-                sprite.CurrentDirection = MyDirection.left;
-                //stopMove = true;
-            }
-            else if (IsTouchingRight(sprite))
-            {
-                sprite.PlayAnimation("Right");
-                sprite.CurrentDirection = MyDirection.right;
-                //stopMove = true;
-            }
-        }
+        //    }
+        //}
+        //public void FaceToTalk(AnimatingSprite sprite)
+        //{
+        //    if (IsTouchingTop(sprite))
+        //    {
+        //        sprite.PlayAnimation("Up");
+        //        sprite.CurrentDirection = MyDirection.up;
+        //        //stopMove = true;
+        //    }
+        //    else if (IsTouchingBottom(sprite))
+        //    {
+        //        sprite.PlayAnimation("Down");
+        //        sprite.CurrentDirection = MyDirection.down;
+        //        //stopMove = true;
+        //    }
+        //    else if (IsTouchingLeft(sprite))
+        //    {
+        //        sprite.PlayAnimation("Left");
+        //        sprite.CurrentDirection = MyDirection.left;
+        //        //stopMove = true;
+        //    }
+        //    else if (IsTouchingRight(sprite))
+        //    {
+        //        sprite.PlayAnimation("Right");
+        //        sprite.CurrentDirection = MyDirection.right;
+        //        //stopMove = true;
+        //    }
+        //}
 
 
 

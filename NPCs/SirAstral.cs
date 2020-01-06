@@ -40,7 +40,7 @@ namespace TextGame
         {
             //UpdateAnimation(gameTime);
             //CheckCollision(sprites);
-            Speak(talkingSprites);
+            //Speak(talkingSprites);
             //float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             //Position += (Direction * deltaTime);
             base.Update(gameTime, sprites, talkingSprites);

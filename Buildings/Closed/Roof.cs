@@ -7,7 +7,7 @@ using System.Text;
 
 namespace TextGame.Buildings.Closed
 {
-    class Roof :AnimatedSprite
+    class Roof : Sprite
     {
         private Texture2D intialRoofTexture;
         public override Rectangle BoundingBox
@@ -15,25 +15,21 @@ namespace TextGame.Buildings.Closed
             get
             {
                 //width and height should be for each individual frame. 43 and 45
-                return new Rectangle((int)sPosition.X, (int)sPosition.Y, 280, 224);
+                return new Rectangle((int)Position.X, (int)Position.Y, 280, 224);
             }
         }
-
         public Roof(Vector2 position) : base(position)
         {
-            sPosition = position;
+            Position = position;
         }
-
-        public void LoadContent(ContentManager content)
+        public override void LoadContent(ContentManager content)
         {
-            roofTexture = content.Load<Texture2D>("smallRoof");
-            sTexture4 = content.Load<Texture2D>("smallRoof");
+            //roofTexture = content.Load<Texture2D>("smallRoof");
+            Texture = content.Load<Texture2D>("smallRoof");
 
         }
-
-        public override void Update(GameTime gameTime, List<AnimatedSprite> sprites)
+        public override void Update(GameTime gameTime, List<Sprite> sprites, List<AnimatingSprite> animatingSprites)
         {
-
             //if (doorOpen)
             //{
 
@@ -48,34 +44,20 @@ namespace TextGame.Buildings.Closed
             //    }
             //    //this.PlayAnimation("Open");
             //}
-
-
-
-
-            sDirection = Vector2.Zero;
-            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            sPosition += (sDirection * deltaTime);
-
             //base.Update(gameTime, sprites);
         }
-
-
         public override void Draw(SpriteBatch spriteBatch)
         {
 
-               spriteBatch.Draw(roofTexture,
-               new Rectangle((int)sPosition.X, (int)sPosition.Y, 280, 224),
-               new Rectangle(0, 0, 160, 128),
-               Color.White);
-            if (drawRoof)
-                spriteBatch.Draw(sTexture4,
-                   new Rectangle((int)sPosition.X, (int)sPosition.Y, 280, 224),
+            //   spriteBatch.Draw(roofTexture,
+            //   new Rectangle((int)sPosition.X, (int)sPosition.Y, 280, 224),
+            //   new Rectangle(0, 0, 160, 128),
+            //   Color.White);
+            //if (drawRoof)
+                spriteBatch.Draw(Texture,
+                   new Rectangle((int)Position.X, (int)Position.Y, 280, 224),
                    new Rectangle(0, 0, 160, 128),
                    Color.White);
-        }
-
-        public override void AnimationDone(string animation)
-        {
         }
     }
 }

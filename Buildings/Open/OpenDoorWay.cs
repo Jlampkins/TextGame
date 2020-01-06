@@ -8,7 +8,7 @@ using TextGame.Buildings.Closed;
 
 namespace TextGame
 {
-    class OpenDoorWay : AnimatedSprite
+    class OpenDoorWay : Sprite
     {
         public override Rectangle BoundingBox
         {
@@ -20,50 +20,41 @@ namespace TextGame
         }
         public OpenDoorWay(Vector2 position) : base(position)
         {
-            sPosition = position;
+            Position = position;
         }
-        public void LoadContent(ContentManager content)
+        public override void LoadContent(ContentManager content)
         {
-            sTexture = content.Load<Texture2D>("openDoorWay");
+            Texture = content.Load<Texture2D>("openDoorWay");
             //sTexture2 = content.Load<Texture2D>("smallRoof");
         }
-        public override void Update(GameTime gameTime, List<AnimatedSprite> sprites)
-        {
-            foreach (var sprite in sprites)
-            {
-                if (sprite is Player &&
-                    this.BoundingBox.Intersects(sprite.BoundingBox) &&
-                    sprite.sDirection.Y > 0)
-                {
-                    drawRoof = true;
-                    doorOpen = false;
-                }
-                if (sprite is Player &&
-                    this.BoundingBox.Intersects(sprite.BoundingBox) &&
-                    sprite.sDirection.Y < 0)
-                {
-                    drawRoof = false;
-                    doorOpen = true;
-                }
-            }
-
-
-            sDirection = Vector2.Zero;
-            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            sPosition += (sDirection * deltaTime);
-
-            //base.Update(gameTime, sprites);
-        }
+        //public override void Update(GameTime gameTime, List<AnimatedSprite> sprites)
+        //{
+        //    foreach (var sprite in sprites)
+        //    {
+        //        if (sprite is Player &&
+        //            this.BoundingBox.Intersects(sprite.BoundingBox) &&
+        //            sprite.sDirection.Y > 0)
+        //        {
+        //            drawRoof = true;
+        //            doorOpen = false;
+        //        }
+        //        if (sprite is Player &&
+        //            this.BoundingBox.Intersects(sprite.BoundingBox) &&
+        //            sprite.sDirection.Y < 0)
+        //        {
+        //            drawRoof = false;
+        //            doorOpen = true;
+        //        }
+        //    }
+        //    //base.Update(gameTime, sprites);
+        //}
         public override void Draw(SpriteBatch spriteBatch)
         { 
-                spriteBatch.Draw(sTexture,
+                spriteBatch.Draw(Texture,
                     //80 61
                        new Rectangle(370, 378, 80, 61),
                        new Rectangle(0, 0, 46, 35),
                        Color.White);
-        }
-        public override void AnimationDone(string animation)
-        {
         }
     }
 }

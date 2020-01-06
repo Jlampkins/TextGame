@@ -10,7 +10,6 @@ namespace TextGame.Buildings.Closed
 {
     class ClosedDoor : Sprite
     {
-
         public override Rectangle BoundingBox
         {
             get
@@ -45,8 +44,6 @@ namespace TextGame.Buildings.Closed
 
         //    //base.Update(gameTime, sprites);
         //}
-
-
         public override void Draw(SpriteBatch spriteBatch)
         {
             if (Texture != null)

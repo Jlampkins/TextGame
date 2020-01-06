@@ -22,12 +22,17 @@ namespace TextGame
         public Dictionary<string, Rectangle[]> Animations = new Dictionary<string, Rectangle[]>();
         public enum MyDirection { none, left, right, up, down };
         public MyDirection CurrentDirection { get; set; }
+        public Vector2 Direction { get; set; }
         public AnimatingSprite(Vector2 position) : base (position)
         {
             Position = position;
         }
         public override void Update(GameTime gameTime, List<Sprite> sprites, List<AnimatingSprite>talkingSprites)
         {
+            foreach (var talking in talkingSprites)
+            {
+                FaceToTalk(talking);
+            }
             UpdateAnimation(gameTime);
             CheckCollision(sprites);
             Speak(talkingSprites);
@@ -79,19 +84,48 @@ namespace TextGame
         #region Collision of Other Sprites
         public void CheckCollision(List<Sprite> sprites)
         {
-            foreach (var barrier in sprites)
+            foreach (var sprite in sprites)
             {
                 //if (barrier == this)
                 //    continue;
-                if ((Direction.X > 0 && IsTouchingLeft(barrier)) ||
-                    (Direction.X < 0 && IsTouchingRight(barrier)))
+                if ((Direction.X > 0 && IsTouchingLeft(sprite)) ||
+                    (Direction.X < 0 && IsTouchingRight(sprite)))
                     Direction = new Vector2(0, Direction.Y);
 
-                if ((Direction.Y > 0 && IsTouchingTop(barrier)) ||
-                   (Direction.Y < 0 && IsTouchingBottom(barrier)))
+                if ((Direction.Y > 0 && IsTouchingTop(sprite)) ||
+                   (Direction.Y < 0 && IsTouchingBottom(sprite)))
                     Direction = new Vector2(Direction.X, 0);
             }
 
+        }
+        public bool IsTouchingLeft(Sprite sprite)
+        {
+            //return true if this otherwise false
+            return this.BoundingBox.Right + this.Direction.X > sprite.BoundingBox.Left &&
+                this.BoundingBox.Left < sprite.BoundingBox.Left &&
+                this.BoundingBox.Bottom > sprite.BoundingBox.Top &&
+                this.BoundingBox.Top < sprite.BoundingBox.Bottom;
+        }
+        public bool IsTouchingRight(Sprite sprite)
+        {
+            return this.BoundingBox.Left + this.Direction.X < sprite.BoundingBox.Right &&
+                this.BoundingBox.Right > sprite.BoundingBox.Right &&
+                this.BoundingBox.Bottom > sprite.BoundingBox.Top &&
+                this.BoundingBox.Top < sprite.BoundingBox.Bottom;
+        }
+        public bool IsTouchingTop(Sprite sprite)
+        {
+            return this.BoundingBox.Bottom + this.Direction.Y > sprite.BoundingBox.Top &&
+                this.BoundingBox.Top < sprite.BoundingBox.Top &&
+                this.BoundingBox.Right > sprite.BoundingBox.Left &&
+                this.BoundingBox.Left < sprite.BoundingBox.Right;
+        }
+        public bool IsTouchingBottom(Sprite sprite)
+        {
+            return this.BoundingBox.Top + this.Direction.Y < sprite.BoundingBox.Bottom &&
+                this.BoundingBox.Bottom > sprite.BoundingBox.Bottom &&
+                this.BoundingBox.Right > sprite.BoundingBox.Left &&
+                this.BoundingBox.Left < sprite.BoundingBox.Right;
         }
         #endregion
 
@@ -102,41 +136,51 @@ namespace TextGame
             {
                 if (sprite == this)
                     continue;
-                if ((sprite is Player && Keyboard.HasBeenPressed(Keys.Space)) &&
-                    (sprite.IsTouchingTop(this) || sprite.IsTouchingBottom(this) ||
-                    sprite.IsTouchingLeft(this) || sprite.IsTouchingRight(this)))
+                if ((sprite is Player && Keyboard.HasBeenPressed(Keys.Space)) && 
+                    (sprite.BoundingBox.Intersects(this.BoundingBox)))
                 {
                     FaceToTalk(sprite);
                 }
+                //{ 
+                //    if (sprite.IsTouchingLeft(this))
+                //    {
+                //        FaceToTalk(sprite);
+                //    }
+                //    //(sprite.IsTouchingTop(this) || sprite.IsTouchingBottom(this) ||
+                //    // || sprite.IsTouchingRight(this)))
+                
+                   
+                //}
 
             }
         }
         public void FaceToTalk(AnimatingSprite sprite)
         {
-            if (sprite.IsTouchingTop(this))
+            if (sprite is Player && Keyboard.HasBeenPressed(Keys.Space) && sprite.IsTouchingTop(this))
             {
                 PlayAnimation("Up");
                 CurrentDirection = MyDirection.up;
                 //stopMove = true;
             }
-            else if (sprite.IsTouchingBottom(this))
+            if (sprite is Player && Keyboard.HasBeenPressed(Keys.Space) && sprite.IsTouchingBottom(this))
             {
                 PlayAnimation("Down");
                 CurrentDirection = MyDirection.down;
                 //stopMove = true;
             }
-            else if (sprite.IsTouchingLeft(this))
+            if (sprite is Player && Keyboard.HasBeenPressed(Keys.Space) && sprite.IsTouchingLeft(this))
             {
                 PlayAnimation("Left");
                 CurrentDirection = MyDirection.left;
                 //stopMove = true;
             }
-            else if (sprite.IsTouchingRight(this))
+            if (sprite is Player && Keyboard.HasBeenPressed(Keys.Space) && sprite.IsTouchingRight(this))
             {
                 PlayAnimation("Right");
                 CurrentDirection = MyDirection.right;
                 //stopMove = true;
             }
+            
         }
         #endregion
     }

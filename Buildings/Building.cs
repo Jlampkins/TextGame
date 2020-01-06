@@ -9,7 +9,7 @@ using TextGame.Buildings.Closed;
 
 namespace TextGame
 {
-    abstract class Building : AnimatedSprite 
+    abstract class Building : Sprite 
     {
         public ContentManager Content { get; set; }
         //160 x 53
@@ -38,40 +38,30 @@ namespace TextGame
         //}
         public Building(Vector2 position) : base(position)
         {
-            sPosition = position;
+            Position = position;
         }
 
-        public void LoadContent(ContentManager content)
+        public override void LoadContent(ContentManager content)
         {
-            sTexture = content.Load<Texture2D>("smallOpenBuilding");
-            sTexture = content.Load<Texture2D>("smallClosedBuilding");
+            //sTexture = content.Load<Texture2D>("smallOpenBuilding");
+            //sTexture = content.Load<Texture2D>("smallClosedBuilding");
 
             //AddAnimation(8);
         }
 
-        public override void Update(GameTime gameTime, List<AnimatedSprite> sprites)
-        {
-            sDirection = Vector2.Zero;
-            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            sPosition += (sDirection * deltaTime);
+        //public override void Update(GameTime gameTime, List<AnimatedSprite> sprites)
+        //{
 
-            //base.Update(gameTime, sprites);
-        }
-
+        //  //base.Update(gameTime, sprites);
+        //}
 
         public override void Draw(SpriteBatch spriteBatch)
         {
             //spriteBatch.Draw(sTexture, sPosition, Color.White);
-            spriteBatch.Draw(sTexture,
-               new Rectangle((int)sPosition.X, (int)sPosition.Y, 275, 250),
+            spriteBatch.Draw(Texture,
+               new Rectangle((int)Position.X, (int)Position.Y, 275, 250),
                new Rectangle(0, 0, 160, 172),
                Color.White);
         }
-
-        public override void AnimationDone(string animation)
-        {
-        }
-
-
     }
 }

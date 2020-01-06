@@ -19,7 +19,6 @@ namespace TextGame
                 return new Rectangle(358, 308, 44, 64);
             }
         }
-
         public OpenDoorJamb(Vector2 position) : base(position)
         {
             Position = position;
@@ -73,9 +72,7 @@ namespace TextGame
         //    //base.Update(gameTime, sprites);
         //}
         public override void Draw(SpriteBatch spriteBatch)
-        {
-            
-
+        {   
             spriteBatch.Draw(Texture,
                new Rectangle(370, 328, 80, 50),
                new Rectangle(0, 0, 46, 29),
