@@ -11,8 +11,11 @@ namespace TextGame
     public abstract class TalkingSprite : Sprite, ISprite
     { 
         private SpriteBatch spriteBatch;
-        private SpriteFont font;
+        public SpriteFont font;
         private Texture2D TextBoxTexture;
+        public Texture2D Talk;
+        private int count = 0;
+
         //public bool IsTalking = false;
         public List<DisplayMessage> messages = new List<DisplayMessage>();
         public struct DisplayMessage
@@ -40,20 +43,19 @@ namespace TextGame
         public override void LoadContent(ContentManager content)
         {
             font = content.Load<SpriteFont>("Text");
-            Texture = content.Load<Texture2D>("textBox");
+            TextBoxTexture = content.Load<Texture2D>("textBox");    
         }
         public override void Update(GameTime gameTime, List<Sprite> sprites, List<AnimatingSprite> talkingSprites)
         {
-            UpdateMessages(gameTime);
+            UpdateMessages(gameTime);   
             base.Update(gameTime, sprites, talkingSprites);
             //messages.Add(new DisplayMessage(SayWords(words), TimeSpan.FromSeconds(2.0), new Vector2(200, 550), Color.White));
 
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
-
             //if player is facing sprite and presses space then draw text box
-            spriteBatch.Draw(Texture,
+            spriteBatch.Draw(TextBoxTexture,
                new Rectangle(100, 500, 464, 128),
                Color.White);
             DrawMessages(spriteBatch, font);

@@ -1,8 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <ApplicationIcon />
+    <StartupObject />
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,8 +25,10 @@
     <None Remove="Buildings\Closed\smallRoof.png" />
     <None Remove="Buildings\Closed\wall.png" />
     <None Remove="Content\animatedDoor.png" />
+    <None Remove="Content\astralTalkBig.png" />
     <None Remove="Content\backOpening.png" />
     <None Remove="Content\backOpeningBig.png" />
+    <None Remove="Content\Block.png" />
     <None Remove="Content\bowie.png" />
     <None Remove="Content\bowieBig.png" />
     <None Remove="Content\brownBrickFloor.png" />
@@ -47,7 +51,13 @@
     <Content Include="Content\animatedDoor.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\astralTalkBig.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\backOpeningBig.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Block.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\closedDoorWay.png">

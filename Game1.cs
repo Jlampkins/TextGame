@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using TextGame.Buildings;
 using TextGame.Buildings.Closed;
 using TextGame.Buildings.Open;
+using TextGame.NPCs;
 
 namespace TextGame
 {
@@ -53,13 +54,15 @@ namespace TextGame
         private SpriteFont font;
         Kiwi kiwi;
         SirAstral npc;
+        AstralBox astralBox;
 
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
+            graphics.HardwareModeSwitch = false;
             graphics.PreferredBackBufferHeight = 720;
-            graphics.PreferredBackBufferWidth = 720;
+            graphics.PreferredBackBufferWidth = 1280;
             Content.RootDirectory = "Content";
             IsMouseVisible = true; 
         }
@@ -79,10 +82,11 @@ namespace TextGame
             //MediaPlayer.Play(townMusic);
             //MediaPlayer.IsRepeating = true;
 
-            player = new Player(new Vector2(100, 100));
+            player = new Player(new Vector2(500, 500));
             npc = new SirAstral(new Vector2(200, 200));
             //weaponOwner = new MoverSprite(new Vector2(150, 150));
             kiwi = new Kiwi(new Vector2(300, 300));
+            //astralBox = new AstralBox(new Vector2(100, 100));
             //textBox = new TextBox(new Vector2(400, 400));
 
             //closedDoor = new ClosedDoor(new Vector2(370, 320));
@@ -131,6 +135,7 @@ namespace TextGame
             npc.LoadContent(Content);
             //weaponOwner.LoadContent(Content);
             kiwi.LoadContent(Content);
+            //astralBox.LoadContent(Content);
 
             //leftLowerWall.LoadContent(Content);
             //rightLowerWall.LoadContent(Content);
@@ -211,6 +216,7 @@ namespace TextGame
             talkingSprites.Add(player);
             talkingSprites.Add(npc);
             talkingSprites.Add(kiwi);
+            //talkingSprites.Add(astralBox);
 
 
             // TODO: use this.Content to load your game content here
@@ -237,7 +243,7 @@ namespace TextGame
             //}
             //show text box when speaking
 
-            foreach (var sprite in sprites)
+            foreach (var sprite in talkingSprites)
             {
                 sprite.Update(gameTime, sprites, talkingSprites);
                 //base.Update(gameTime);

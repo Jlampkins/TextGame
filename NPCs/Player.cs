@@ -18,7 +18,7 @@ namespace TextGame
             get
             {
                 //width and height should be for each individual frame. 43 and 45
-                return new Rectangle((int)Position.X, (int)Position.Y, 38, 48);
+                return new Rectangle((int)Position.X, (int)Position.Y, 48, 50);
             }
         }
         public override void LoadContent(ContentManager content)
@@ -38,7 +38,7 @@ namespace TextGame
             AddAnimation(1, 0, 7, "IdleDown", 48, 48, new Vector2(0, 0));
             PlayAnimation("IdleDown");
         }
-        private void HandleInput(KeyboardState keyState)
+        private void HandleInput(KeyboardState keyState, List<AnimatingSprite> sprites)
         {
             if (!attacking && !IsTalking)
             {
@@ -75,16 +75,54 @@ namespace TextGame
                 }
             }
             //used for attacking animation
-            //if (keyState.IsKeyDown(Keys.Space) && IsTalking)
-            //{
+            if (Keyboard.HasBeenPressed(Keys.Space))
+            {
+                foreach (var sprite in sprites)
+                {
+                    if(sprite == this)
+                        continue;
+
+                    Console.WriteLine("FACETOTALK!!");
+                    Console.WriteLine($"This is {this}");
+                    Console.WriteLine($"sprite is {sprite}");
+                    if (IsTouchingTop(sprite))
+                    {
+                        Console.WriteLine("You should play Up Animation");
+                        sprite.PlayAnimation("Up");
+                        sprite.CurrentDirection = MyDirection.up;
+                        //stopMove = true;
+                    }
+                    else if (IsTouchingBottom(sprite))
+                    {
+                        Console.WriteLine("You should play Down Animation");
+                        sprite.PlayAnimation("Down");
+                        sprite.CurrentDirection = MyDirection.down;
+                        //stopMove = true;
+                    }
+                    else if (IsTouchingLeft(sprite))
+                    {
+                        Console.WriteLine("You should play Left Animation");
+                        sprite.PlayAnimation("Left");
+                        sprite.CurrentDirection = MyDirection.left;
+                        //stopMove = true;
+                    }
+                    else if (IsTouchingRight(sprite))
+                    {
+                        Console.WriteLine("You should play Right Animation");
+                        sprite.PlayAnimation("Right");
+                        sprite.CurrentDirection = MyDirection.right;
+                        //stopMove = true;
+                    }
+                    sprite.CurrentDirection = MyDirection.none;
+                }
                 //isTalking = false;
-                //if(this.BoundingBox.)
-                //if (currentAnimation.Contains("Down"))
-                //{
-                //    PlayAnimation("AttackDown");
-                //    attacking = true;
-                //    currentDirection = MyDirection.down;
-                //}
+                //if (this.BoundingBox.)
+                //    if (currentAnimation.Contains("Down"))
+                //    {
+                //        PlayAnimation("AttackDown");
+                //        attacking = true;
+                //        currentDirection = MyDirection.down;
+                //    }
                 //if (currentAnimation.Contains("Up"))
                 //{
                 //    PlayAnimation("AttackUp");
@@ -123,22 +161,25 @@ namespace TextGame
             //        PlayAnimation("IdleDown");
             //    }
             //}
-            CurrentDirection = MyDirection.none;
+        }
+        CurrentDirection = MyDirection.none;
         }
         public override void Update(GameTime gameTime, List<Sprite> sprites, List<AnimatingSprite> talkingSprites)
         {
             Direction *= mySpeed;
+            PlayerCollision(sprites);
             Position += Direction;
             Direction = Vector2.Zero;
-            //PlayerCollision(sprites);
-            //Speak(talkingSprites);
-            HandleInput(Keyboard.GetState());
 
-            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            Position += (Direction * deltaTime);
+            //Speak(talkingSprites);
+            //FaceToTalk(talkingSprites);
+            HandleInput(Keyboard.GetState(), talkingSprites);
+
+            //float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            //Position += (Direction * deltaTime);
 
             base.Update(gameTime, sprites, talkingSprites);
-        }   
+        }
         public void PlayerCollision(List<Sprite>sprites)
         {
             foreach (var sprite in sprites)
@@ -147,21 +188,22 @@ namespace TextGame
                     continue;
                 if ((this.Direction.X > 0 && this.IsTouchingLeft(sprite) && !(sprite is OpenDoorJamb) && !(sprite is OpenDoorWay) && !(sprite is ClosedDoor)) ||
                     (this.Direction.X < 0 && this.IsTouchingRight(sprite)) && !(sprite is OpenDoorJamb) && !(sprite is OpenDoorWay) && !(sprite is ClosedDoor))
-                    Direction = new Vector2(0, Direction.Y);
+                    Direction.X = 0;
 
                 if ((this.Direction.Y > 0 && this.IsTouchingTop(sprite) && !(sprite is OpenDoorJamb) && !(sprite is OpenDoorWay) && !(sprite is ClosedDoor)) ||
                    (this.Direction.Y < 0 && this.IsTouchingRight(sprite)) && !(sprite is OpenDoorJamb) && !(sprite is OpenDoorWay) && !(sprite is ClosedDoor))
-                        Direction = new Vector2(Direction.X, 0);
+                    Direction.Y = 0;
             }
         }
 
         //public void Speak(List<AnimatingSprite> sprites)
         //{
+        //    Console.WriteLine("I am in speakmethod");
         //    foreach (var sprite in sprites)
         //    {
         //        if (sprite == this)
         //            continue;
-        //        if ((Keyboard.HasBeenPressed(Keys.Space)) &&
+        //        if (Keyboard.HasBeenPressed(Keys.Space) &&
         //            (IsTouchingTop(sprite) || IsTouchingBottom(sprite) ||
         //            IsTouchingLeft(sprite) || IsTouchingRight(sprite)))
         //        {
@@ -170,33 +212,44 @@ namespace TextGame
 
         //    }
         //}
-        //public void FaceToTalk(AnimatingSprite sprite)
-        //{
-        //    if (IsTouchingTop(sprite))
-        //    {
-        //        sprite.PlayAnimation("Up");
-        //        sprite.CurrentDirection = MyDirection.up;
-        //        //stopMove = true;
-        //    }
-        //    else if (IsTouchingBottom(sprite))
-        //    {
-        //        sprite.PlayAnimation("Down");
-        //        sprite.CurrentDirection = MyDirection.down;
-        //        //stopMove = true;
-        //    }
-        //    else if (IsTouchingLeft(sprite))
-        //    {
-        //        sprite.PlayAnimation("Left");
-        //        sprite.CurrentDirection = MyDirection.left;
-        //        //stopMove = true;
-        //    }
-        //    else if (IsTouchingRight(sprite))
-        //    {
-        //        sprite.PlayAnimation("Right");
-        //        sprite.CurrentDirection = MyDirection.right;
-        //        //stopMove = true;
-        //    }
-        //}
+        public void FaceToTalk(List<AnimatingSprite> sprites)
+        {
+            foreach (var sprite in sprites)
+            {
+                Console.WriteLine("FACETOTALK!!");
+                Console.WriteLine($"This is {this}");
+                Console.WriteLine($"sprite is {sprite}");
+                if ((Keyboard.HasBeenPressed(Keys.Space) && IsTouchingTop(sprite)))
+                {
+                    Console.WriteLine("You should play Up Animation");
+                    sprite.PlayAnimation("Up");
+                    sprite.CurrentDirection = MyDirection.up;
+                    //stopMove = true;
+                }
+                else if ((Keyboard.HasBeenPressed(Keys.Space) && IsTouchingBottom(sprite)))
+                {
+                    Console.WriteLine("You should play Down Animation");
+                    sprite.PlayAnimation("Down");
+                    sprite.CurrentDirection = MyDirection.down;
+                    //stopMove = true;
+                }
+                else if ((Keyboard.HasBeenPressed(Keys.Space) && IsTouchingLeft(sprite)))
+                {
+                    Console.WriteLine("You should play Left Animation");
+                    sprite.PlayAnimation("Left");
+                    sprite.CurrentDirection = MyDirection.left;
+                    //stopMove = true;
+                }
+                else if ((Keyboard.HasBeenPressed(Keys.Space) && IsTouchingRight(sprite)))
+                {
+                    Console.WriteLine("You should play Right Animation");
+                    sprite.PlayAnimation("Right");
+                    sprite.CurrentDirection = MyDirection.right;
+                    //stopMove = true;
+                }
+            }
+            CurrentDirection = MyDirection.none;
+        }
 
 
 

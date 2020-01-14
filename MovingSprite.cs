@@ -10,7 +10,7 @@ namespace TextGame
         public bool StopMove { get; set; }
         public Rectangle Boundary { get; set; }
         double TotalElapsedSeconds = 0;
-        const double MovementChangeTimeSeconds = 10.0;
+        const double MovementChangeTimeSeconds = 3.0;
         public MovingSprite(Vector2 position) : base(position)
         {
             Position = position;

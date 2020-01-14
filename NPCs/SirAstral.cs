@@ -14,17 +14,19 @@ namespace TextGame
             get
             {
                 //width and height should be for each individual frame. 38 and 48
-                return new Rectangle((int)Position.X, (int)Position.Y, 38, 48);
+                return new Rectangle((int)Position.X, (int)Position.Y, 48, 50);
             }
         }
         public override void LoadContent(ContentManager content)
         {
             Texture = content.Load<Texture2D>("sirAstralBig");
+            //Talk = content.Load<Texture2D>("astralTalkBig");
             
         }
         public SirAstral(Vector2 position) : base(position)
         {
             //336 42
+            //Position = position;
             FramesPerSecond = 2;
             AddAnimation(2, 0, 0, "Up", 48, 48, new Vector2(0, 0));
             AddAnimation(1, 0, 0, "IdleUp", 48, 48, new Vector2(0, 0));
@@ -36,15 +38,29 @@ namespace TextGame
             AddAnimation(1, 0, 3, "IdleRight", 48, 48, new Vector2(0, 0));
             PlayAnimation("Down");
         }
-        public override void Update(GameTime gameTime, List<Sprite> sprites, List<AnimatingSprite> talkingSprites)
-        {
-            //UpdateAnimation(gameTime);
-            //CheckCollision(sprites);
-            //Speak(talkingSprites);
-            //float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            //Position += (Direction * deltaTime);
-            base.Update(gameTime, sprites, talkingSprites);
-        }
+
+        //public override void Update(GameTime gameTime, List<Sprite> sprites, List<AnimatingSprite> talkingSprites)
+        //{
+        //    //UpdateMessages(gameTime);
+
+        //    //UpdateAnimation(gameTime);
+        //    //CheckCollision(sprites);
+        //    //Speak(talkingSprites);
+        //    //float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+        //    //Position += (Direction * deltaTime);
+        //    //messages.Add(new DisplayMessage("Hello, traveller.  What is your name?", TimeSpan.FromSeconds(2.0), new Vector2(200, 550), Color.White));
+        //    //base.Update(gameTime, sprites, talkingSprites);
+        //}
+
+        //public override void Draw(SpriteBatch spriteBatch)
+        //{
+        //    //if the player talks to this character display the talk animation
+        //    if (true)
+        //    {
+        //        spriteBatch.Draw(Talk, Position, Color.White);
+        //        DrawMessages(spriteBatch, font);
+        //    }
+        //}
     }
 }
 
