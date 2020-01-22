@@ -90,6 +90,8 @@ namespace TextGame
                     {
                         Console.WriteLine("You should play Up Animation");
                         sprite.StopMove = true;
+                        sprite.IsTalking = true;
+                        IsTalking = true;
                         Speak(sprite);
                         sprite.PlayAnimation("Up");
                         sprite.PlayAnimation("Talk");
@@ -100,6 +102,7 @@ namespace TextGame
                     {
                         Console.WriteLine("You should play Down Animation");
                         sprite.StopMove = true;
+                        sprite.IsTalking = true;
                         Speak(sprite);
                         sprite.PlayAnimation("Down");
                         sprite.PlayAnimation("Talk");
@@ -110,6 +113,7 @@ namespace TextGame
                     {
                         Console.WriteLine("You should play Left Animation");
                         sprite.StopMove = true;
+                        sprite.IsTalking = true;
                         Speak(sprite);
                         sprite.PlayAnimation("Left");
                         sprite.PlayAnimation("Talk");
@@ -120,6 +124,7 @@ namespace TextGame
                     {
                         Console.WriteLine("You should play Right Animation");
                         sprite.StopMove = true;
+                        sprite.IsTalking = true;
                         Speak(sprite);
                         sprite.PlayAnimation("Right");
                         sprite.PlayAnimation("Talk");

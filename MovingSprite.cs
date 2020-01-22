@@ -17,8 +17,7 @@ namespace TextGame
         }
         public override void Update(GameTime gameTime, List<Sprite> sprites, List<AnimatingSprite> talkingSprites)
         {
-            
-            
+           
             foreach (var sprite in talkingSprites)
             {
                 if (sprite.StopMove)

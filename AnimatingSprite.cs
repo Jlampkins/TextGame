@@ -12,6 +12,7 @@ namespace TextGame
     public abstract class AnimatingSprite : TalkingSprite, ISprite, IAnimate
     {
         public bool StopMove { get; set; }
+        public bool IsTalking { get; set; }
         private int count = 0;
         public double FramesPerSecond
         {
@@ -74,7 +75,7 @@ namespace TextGame
                 }
                 else
                 {
-                    //AnimationDone(CurrentAnimation);
+                    //AnimationDone(CurrentAnimation); 
                     FrameIndex = 0;
                 }
             }
@@ -82,6 +83,9 @@ namespace TextGame
         #endregion
 
         #region Speak Animation
+
+
+
         //public void Speak(List<AnimatingSprite> sprites)
         //{
         //    foreach (var sprite in sprites)

@@ -41,6 +41,7 @@
     <None Remove="Content\openDoorWay.png" />
     <None Remove="Content\rightLowerCornerOpening.png" />
     <None Remove="Content\rightUpperCornerOpening.png" />
+    <None Remove="Content\SirAstralBoi.png" />
     <None Remove="Content\smallBrownBrickFloor.png" />
     <None Remove="Content\tanWall.png" />
     <None Remove="Content\textBox.png" />
@@ -88,6 +89,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\rightWallEdge.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\SirAstralBoi.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\smallBrownBrickFloor.png">

@@ -21,7 +21,7 @@ namespace TextGame
         //public AstralBox AstralTalk = new AstralBox(new Vector2(200, 200));
         public override void LoadContent(ContentManager content)
         {
-            Texture = content.Load<Texture2D>("sirAstralBig");
+            Texture = content.Load<Texture2D>("SirAstralBoi");
             //Talk = content.Load<Texture2D>("astralTalkBig");
 
         }
@@ -38,8 +38,8 @@ namespace TextGame
             AddAnimation(1, 0, 5, "IdleLeft", 48, 48, new Vector2(0, 0));
             AddAnimation(2, 0, 2, "Right", 48, 48, new Vector2(0, 0));
             AddAnimation(1, 0, 3, "IdleRight", 48, 48, new Vector2(0, 0));
-            //AddAnimation(2, 0, 0, "Talk", 120, 154, new Vector2(0, 0));
-            //AddAnimation(1, 0, 2, "Blink", 120, 154, new Vector2(0, 0));
+            AddAnimation(2, 48, 0, "Talk", 120, 154, new Vector2(0, 0));
+            AddAnimation(1, 48, 2, "Blink", 120, 154, new Vector2(0, 0));
             PlayAnimation("Down");
         }
 

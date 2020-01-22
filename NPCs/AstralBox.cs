@@ -23,10 +23,9 @@ namespace TextGame.NPCs
         public override void LoadContent(ContentManager content)
         {
             //Texture = content.Load<Texture2D>("sirAstralBig");
-            if (StopMove)
-            {
-                Texture = content.Load<Texture2D>(whoSpeaking);
-            }
+
+                Texture = content.Load<Texture2D>("astralTalkBig");
+
         }
         public AstralBox(Vector2 position) : base(position)
         {

@@ -11,7 +11,7 @@ namespace TextGame
     public abstract class Sprite : ISprite
     {
         public Texture2D Texture { get; set; }
-        public bool IsTalking = false;
+        //public bool IsTalking = false;
         public Vector2 Origin;
         public Vector2 Position { get; set; }
         public bool Collided { get; private set; }
