@@ -11,6 +11,7 @@ namespace TextGame
 {
     public abstract class AnimatingSprite : TalkingSprite, ISprite, IAnimate
     {
+        public bool StopMove { get; set; }
         private int count = 0;
         public double FramesPerSecond
         {
@@ -31,6 +32,7 @@ namespace TextGame
         public override void Update(GameTime gameTime, List<Sprite> sprites, List<AnimatingSprite>talkingSprites)
         {
             UpdateAnimation(gameTime);
+            StopMove = false;
             //CheckCollision(sprites);
             //Blink();
             //Speak(talkingSprites);
@@ -39,7 +41,7 @@ namespace TextGame
             base.Update(gameTime, sprites, talkingSprites);
         }
         public override void Draw(SpriteBatch spriteBatch)
-        {
+        {   
             spriteBatch.Draw(Texture, Position, Animations[CurrentAnimation][FrameIndex], Color.White);
         }
         #region Animation

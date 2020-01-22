@@ -7,7 +7,7 @@ using System.Text;
 
 namespace TextGame
 {
-    class Kiwi : AnimatingSprite
+    class Kiwi : MovingSprite
     {
         public override Rectangle BoundingBox
         {

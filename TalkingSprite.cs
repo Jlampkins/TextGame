@@ -15,6 +15,7 @@ namespace TextGame
         private Texture2D TextBoxTexture;
         public Texture2D Talk;
         private int count = 0;
+        public string whoSpeaking;
 
         //public bool IsTalking = false;
         public List<DisplayMessage> messages = new List<DisplayMessage>();
@@ -101,6 +102,19 @@ namespace TextGame
         {
             return words;
         }
-        
+
+        public void Speak(AnimatingSprite talkingSprite)
+        {
+            if (talkingSprite is SirAstral)
+            {
+                whoSpeaking = "astralTalkBig";
+            }
+            else if (talkingSprite is Kiwi)
+            {
+                whoSpeaking = "kiwiTalkBig";
+
+            }
+        }
+
     }
 }

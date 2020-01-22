@@ -7,7 +7,7 @@ namespace TextGame
 {
     abstract class MovingSprite : AnimatingSprite, ISprite, IAnimate, IMove
     {
-        public bool StopMove { get; set; }
+
         public Rectangle Boundary { get; set; }
         double TotalElapsedSeconds = 0;
         const double MovementChangeTimeSeconds = 3.0;
@@ -17,8 +17,22 @@ namespace TextGame
         }
         public override void Update(GameTime gameTime, List<Sprite> sprites, List<AnimatingSprite> talkingSprites)
         {
-            GetMoveDirection();
-            RandomMove(gameTime);
+            
+            
+            foreach (var sprite in talkingSprites)
+            {
+                if (sprite.StopMove)
+                {
+                    sprite.Direction.X = 0;
+                    sprite.Direction.Y = 0;
+                }
+                else
+                {
+                    GetMoveDirection();
+                    RandomMove(gameTime);
+                }
+            }
+            
             //Speak(sprites);
             Position += Direction;
             base.Update(gameTime, sprites, talkingSprites);

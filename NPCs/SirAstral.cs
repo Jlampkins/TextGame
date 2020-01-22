@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using TextGame.NPCs;
 
 namespace TextGame
 {
@@ -17,11 +18,12 @@ namespace TextGame
                 return new Rectangle((int)Position.X, (int)Position.Y, 48, 50);
             }
         }
+        //public AstralBox AstralTalk = new AstralBox(new Vector2(200, 200));
         public override void LoadContent(ContentManager content)
         {
             Texture = content.Load<Texture2D>("sirAstralBig");
             //Talk = content.Load<Texture2D>("astralTalkBig");
-            
+
         }
         public SirAstral(Vector2 position) : base(position)
         {
@@ -36,6 +38,8 @@ namespace TextGame
             AddAnimation(1, 0, 5, "IdleLeft", 48, 48, new Vector2(0, 0));
             AddAnimation(2, 0, 2, "Right", 48, 48, new Vector2(0, 0));
             AddAnimation(1, 0, 3, "IdleRight", 48, 48, new Vector2(0, 0));
+            //AddAnimation(2, 0, 0, "Talk", 120, 154, new Vector2(0, 0));
+            //AddAnimation(1, 0, 2, "Blink", 120, 154, new Vector2(0, 0));
             PlayAnimation("Down");
         }
 

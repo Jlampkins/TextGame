@@ -23,8 +23,10 @@ namespace TextGame.NPCs
         public override void LoadContent(ContentManager content)
         {
             //Texture = content.Load<Texture2D>("sirAstralBig");
-            Texture = content.Load<Texture2D>("astralTalkBig");
-
+            if (StopMove)
+            {
+                Texture = content.Load<Texture2D>(whoSpeaking);
+            }
         }
         public AstralBox(Vector2 position) : base(position)
         {
@@ -36,6 +38,22 @@ namespace TextGame.NPCs
             PlayAnimation("Talk");
             
         }
+
+
+        //public void Speak(AnimatingSprite talkingSprite)
+        //{
+        //        if (talkingSprite is SirAstral)
+        //        {
+        //            whoSpeaking = "astralTalkBig";
+        //        }
+        //        else if (talkingSprite is Kiwi)
+        //        {
+        //            whoSpeaking = "kiwiTalkBig";
+
+        //        } 
+        //}
+
+
         //public int Blink()
         //{
         //    if (this.CurrentAnimation.Contains("Talk") && count == 50)
@@ -64,7 +82,10 @@ namespace TextGame.NPCs
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
-            base.Draw(spriteBatch);
+            if (StopMove)
+            {
+                spriteBatch.Draw(Texture, Position, Animations[CurrentAnimation][FrameIndex], Color.White);
+            }
         }
 
     }

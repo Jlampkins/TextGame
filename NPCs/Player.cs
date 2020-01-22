@@ -74,44 +74,58 @@ namespace TextGame
                     CurrentDirection = MyDirection.right;
                 }
             }
-            //used for attacking animation
+            //used for talking
             if (Keyboard.HasBeenPressed(Keys.Space))
             {
                 foreach (var sprite in sprites)
                 {
                     if(sprite == this)
                         continue;
-
+                    
                     Console.WriteLine("FACETOTALK!!");
                     Console.WriteLine($"This is {this}");
                     Console.WriteLine($"sprite is {sprite}");
+                    
                     if (IsTouchingTop(sprite))
                     {
                         Console.WriteLine("You should play Up Animation");
+                        sprite.StopMove = true;
+                        Speak(sprite);
                         sprite.PlayAnimation("Up");
+                        sprite.PlayAnimation("Talk");
                         sprite.CurrentDirection = MyDirection.up;
-                        //stopMove = true;
+                        
                     }
                     else if (IsTouchingBottom(sprite))
                     {
                         Console.WriteLine("You should play Down Animation");
+                        sprite.StopMove = true;
+                        Speak(sprite);
                         sprite.PlayAnimation("Down");
+                        sprite.PlayAnimation("Talk");
                         sprite.CurrentDirection = MyDirection.down;
-                        //stopMove = true;
+                        
                     }
                     else if (IsTouchingLeft(sprite))
                     {
                         Console.WriteLine("You should play Left Animation");
+                        sprite.StopMove = true;
+                        Speak(sprite);
                         sprite.PlayAnimation("Left");
+                        sprite.PlayAnimation("Talk");
                         sprite.CurrentDirection = MyDirection.left;
-                        //stopMove = true;
+                        
                     }
                     else if (IsTouchingRight(sprite))
                     {
                         Console.WriteLine("You should play Right Animation");
+                        sprite.StopMove = true;
+                        Speak(sprite);
                         sprite.PlayAnimation("Right");
+                        sprite.PlayAnimation("Talk");
+
                         sprite.CurrentDirection = MyDirection.right;
-                        //stopMove = true;
+                        
                     }
                     sprite.CurrentDirection = MyDirection.none;
                 }

@@ -86,7 +86,7 @@ namespace TextGame
             npc = new SirAstral(new Vector2(200, 200));
             //weaponOwner = new MoverSprite(new Vector2(150, 150));
             kiwi = new Kiwi(new Vector2(300, 300));
-            //astralBox = new AstralBox(new Vector2(100, 100));
+            astralBox = new AstralBox(new Vector2(100, 100));
             //textBox = new TextBox(new Vector2(400, 400));
 
             //closedDoor = new ClosedDoor(new Vector2(370, 320));
@@ -135,7 +135,7 @@ namespace TextGame
             npc.LoadContent(Content);
             //weaponOwner.LoadContent(Content);
             kiwi.LoadContent(Content);
-            //astralBox.LoadContent(Content);
+            astralBox.LoadContent(Content);
 
             //leftLowerWall.LoadContent(Content);
             //rightLowerWall.LoadContent(Content);
@@ -216,7 +216,7 @@ namespace TextGame
             talkingSprites.Add(player);
             talkingSprites.Add(npc);
             talkingSprites.Add(kiwi);
-            //talkingSprites.Add(astralBox);
+            talkingSprites.Add(astralBox);
 
 
             // TODO: use this.Content to load your game content here
